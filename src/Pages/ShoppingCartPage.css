@@ -1,0 +1,119 @@
+/* ShoppingCartPage.css */
+
+.shopping-cart-container {
+    padding: 40px 20px;
+    max-width: 800px;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    min-height: 650px;
+  }
+  
+  .order-card {
+    flex: 3;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+    padding: 20px;
+    background-color: #fff;
+  }
+  
+  .cart-items-container {
+    max-height: 400px; /* Limit height for scrolling */
+    overflow-y: auto;
+    padding-right: 10px; /* Space for scrollbar */
+  }
+  
+  .cart-items-container::-webkit-scrollbar {
+    width: 8px; /* Scrollbar width */
+  }
+  
+  .cart-items-container::-webkit-scrollbar-thumb {
+    background-color: #ccc; /* Scrollbar thumb color */
+    border-radius: 8px;
+  }
+  
+  .cart-items-container::-webkit-scrollbar-track {
+    background-color: #f1f1f1; /* Scrollbar track color */
+  }
+  
+  .order-summary-card {
+    flex: 2;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+    padding: 20px;
+    background-color: #fff;
+    height: max-content;
+  }
+  
+  .order-summary-card h3 {
+    position: relative;
+    margin-bottom: 10px;
+  }
+  
+  .order-summary-card h3::after {
+    content: '';
+    display: block;
+    height: 2px;
+    background-color: #ccc;
+    margin-top: 5px;
+    width: 100%;
+  }
+  
+  .cart-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .cart-item-image {
+    width: 50px;
+    height: 50px;
+    border-radius: 8px;
+  }
+  
+  .cart-item-price {
+    font-size: 18px;
+    font-weight: bold;
+  }
+  
+  .delete-icon {
+    color: red;
+    cursor: pointer;
+    font-size: 24px;
+  }
+  
+  .total-price {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+  
+  .checkout-button {
+    background-color: #108ff6;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  .payment-methods {
+    margin-top: 20px;
+    font-size: 14px;
+  }
+  
+  .payment-icons {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+  
+  .payment-icon {
+    width: 50px;
+  }
+  

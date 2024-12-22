@@ -1,0 +1,39 @@
+.navbar-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.navbar_container {
+    background-color: #fff;
+    width: 55%;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1);
+    padding: 0 20px;
+    margin: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+ul {
+    list-style-type: none;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+}
+
+li {
+    padding: 0 20px;
+    font-weight: 500;
+    font-size: 1.25rem;
+    cursor: pointer;
+    position: relative;
+    transition: color 0.3s ease, border-bottom 0.3s ease;
+}
+
+li.selected {
+    color: #2196f3; /* Neon color for selected item */
+    border-bottom: 2px solid #2196f3; /* Underline border */
+}
+

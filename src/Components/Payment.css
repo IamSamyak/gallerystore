@@ -1,0 +1,59 @@
+/* Payment.css */
+
+/* PhonePe color scheme */
+:root {
+  --phonepe-purple: #4b2e8e; /* Primary purple */
+  --phonepe-pink: #f84f71;   /* Accent pink */
+  --phonepe-white: #ffffff;  /* White background */
+}
+
+.payment-form {
+  background-color: var(--phonepe-white);
+  padding: 25px;
+  border-radius: 10px;
+  width: 100%;
+  max-width: 500px;
+  margin: 25vh auto;
+  height: max-content;
+  font-size: 18px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  font-weight: bold;
+  color: var(--phonepe-purple);
+}
+
+.form-input {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 18px;
+}
+
+.form-input:focus {
+  border-color: var(--phonepe-purple);
+  outline: none;
+}
+
+.payment-button {
+  width: 100%;
+  padding: 15px;
+  background-color: var(--phonepe-purple);
+  color: var(--phonepe-white);
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.payment-button:hover {
+  background-color: var(--phonepe-pink);
+}
