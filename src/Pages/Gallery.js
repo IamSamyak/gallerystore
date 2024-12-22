@@ -14,7 +14,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 function Gallery({ addToCart, isAdminLoggedIn }) {
     const { galleryGroupId } = useParams();
-    const navigate = useNavigate(); 
+    const navigate = useNavigate();
     const [galleryAssets, setGalleryAssets] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -228,31 +228,62 @@ function Gallery({ addToCart, isAdminLoggedIn }) {
             <div className="gallery">
                 {galleryAssets?.map((item, index) => {
                     return (
-                        <div className="pics" key={index} onClick={() => openModal(index)}>
-                            <div style={{ position: 'relative' }}>
-                                <img src={item.imageUrl} style={{ width: '100%' }} alt="gallery" />
-                                <div
-                                    style={{
-                                        position: 'absolute',
-                                        top: '50%',
-                                        left: '50%',
-                                        transform: 'translate(-50%, -50%)',
-                                        color: 'rgba(255, 255, 255, 0.5)',
-                                        fontSize: '16px',
-                                        fontWeight: 'bold',
-                                        pointerEvents: 'none',
-                                        userSelect: 'none',
-                                    }}
-                                >
-                                    @Ravi_Gore
+                        index == galleryAssets.length - 1 ?
+                            <div style={styles.card}>
+                                <video
+                                    style={styles.video}
+                                    src='https://videocdn.cdnpk.net/videos/06caf8ac-1e6a-444e-98b5-0a0cfefe0a73/horizontal/previews/watermarked/large.mp4'
+                                    autoPlay
+                                    loop
+                                    muted
+                                    playsInline
+                                    controls={false} // Remove controls for a clean look
+                                />
+                            </div> :
+                            <div className="pics" key={index} onClick={() => openModal(index)}>
+                                <div style={{ position: 'relative' }}>
+                                    <img src={item.imageUrl} style={{ width: '100%' }} alt="gallery" />
+                                    <div
+                                        style={{
+                                            position: 'absolute',
+                                            top: '50%',
+                                            left: '50%',
+                                            transform: 'translate(-50%, -50%)',
+                                            color: 'rgba(255, 255, 255, 0.5)',
+                                            fontSize: '16px',
+                                            fontWeight: 'bold',
+                                            pointerEvents: 'none',
+                                            userSelect: 'none',
+                                        }}
+                                    >
+                                        @Ravi_Gore
+                                    </div>
                                 </div>
                             </div>
-                        </div>
                     );
                 })}
             </div>
         </>
     );
 }
+
+const styles = {
+    card: {
+        width: "100%",
+        height: "100%",
+        border: "1px solid #ddd",
+        borderRadius: "8px",
+        overflow: "hidden",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+    },
+    video: {
+        width: "100%",
+        height: "100%",
+        objectFit: "cover", 
+    },
+};
 
 export default Gallery;
