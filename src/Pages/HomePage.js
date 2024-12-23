@@ -42,9 +42,26 @@ const HomePage = () => {
 
   return (
     <div className="home-page">
-      {/* Search Bar */}
+      {/* Full-width banner image */}
+      <div className="banner">
+        <img
+          // src="https://media.istockphoto.com/id/1124687034/photo/man-on-wheelchair-taking-photos-of-beautiful-landscape-in-a-foggy-morning-st-thomas-slovenia.jpg?s=1024x1024&w=is&k=20&c=e0uuTVFb3TLlt02m2EAm_1LuRw8gyMBsPk9FF24JZDk="
+          src="https://store.sony.com.au/on/demandware.static/-/Library-Sites-sony-shared-library/default/dwb1bfa1fa/content/category/cameras/camera-category-banner.jpg"
+          alt="Banner"
+          className="banner-image"
+        />
+      </div>
+
+      <div className="exciting-message">
+        <h2>Welcome to the World of Photography by Ravi Gore!</h2>
+        <p>
+          "Capturing moments, telling stories, and freezing time with every click. Explore breathtaking landscapes, beautiful portraits, and much more through my lens. Join me on this visual journey to discover the art of photography in its purest form."
+        </p>
+      </div>
+      
       <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
 
+      {/* Cards container */}
       <div className="card-container">
         {filteredAssets.map((filteredAsset, index) => (
           <div className="card" key={index}>
@@ -59,12 +76,16 @@ const HomePage = () => {
             </div>
             <div className="card-info">
               <div className="location-name">
-                <span style={{fontWeight:'500'}}>Customer Name</span>: {filteredAsset.customerName}
+                <span style={{ fontWeight: "500" }}>Customer Name</span>:{" "}
+                {filteredAsset.customerName}
               </div>
               <div className="location-name">
-                <span style={{fontWeight:'500'}}>Location</span>: {filteredAsset.location}
+                <span style={{ fontWeight: "500" }}>Location</span>:{" "}
+                {filteredAsset.location}
               </div>
-              <div className="location-name"><span style={{fontWeight:'500'}}>Cost</span>: ₹ 20000</div>
+              <div className="location-name">
+                <span style={{ fontWeight: "500" }}>Cost</span>: ₹ 20000
+              </div>
             </div>
             <div className="button-wrapper">
               <div

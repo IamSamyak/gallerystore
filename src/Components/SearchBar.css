@@ -1,15 +1,17 @@
 .search-container {
     display: flex;
-    justify-content: center;
+    justify-content: start;
     align-items: center;
     width: 100%;
     padding: 10px;
+    padding-left: 30px;
+    margin-top: 2vh;
   }
   
   .search-input-container {
     display: flex;
     align-items: center;
-    background-color: #f1f1f1;
+    background-color: #f5f5f5;
     border-radius: 50px; /* Rounded container */
     padding: 10px 20px; /* Increased padding */
     width: 100%;

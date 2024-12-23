@@ -4,9 +4,10 @@ import './Gallery.css';
 import CloseIcon from '@mui/icons-material/Close';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+// import ArrowBackIcon from '../Assets/backwardicon.png'
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import SelectAllIcon from '@mui/icons-material/SelectAll';
+import DoneAllIcon from '@mui/icons-material/DoneAll';
 import DeleteIcon from '@mui/icons-material/Delete';
 import PreviewIcon from '@mui/icons-material/Preview';
 import Tooltip from '@mui/material/Tooltip';
@@ -27,6 +28,7 @@ function Gallery({ addToCart, isAdminLoggedIn }) {
     const [price, setPrice] = useState(0); // Initial dummy price
     const [isEditing, setIsEditing] = useState(false); // To toggle between editable and non-editable price
     const [newPrice, setNewPrice] = useState(price);
+    const [isSelected, setIsSelected] = useState(false);
 
     const handlePriceEdit = () => {
         setIsEditing(true); // Enable editing mode
@@ -143,38 +145,55 @@ function Gallery({ addToCart, isAdminLoggedIn }) {
 
     return (
         <>
-            <div style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                backgroundColor: '#f5f5f5',
-                border: '1px solid #ccc',
-                borderRadius: '8px',
-                padding: '10px',
-                marginBottom: '20px',
-            }}>
+            <div
+                style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    backgroundColor: '#f5f5f5',
+                    width: '98.5%',
+                    margin: '20px auto',
+                    border: '1px solid #ccc',
+                    // boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1)',
+                    borderRadius: '8px',
+                    padding: '15px 10px',
+                    marginBottom: '20px',
+                }}
+            >
+
                 <div style={{ display: 'flex', alignItems: 'center', gap: '15px', marginLeft: '10px' }}>
                     <Tooltip title="Go Back">
                         <ArrowBackIcon
                             style={{
                                 cursor: 'pointer',
                                 fontSize: '30px',
-                                marginRight: '10px'
+                                marginRight: '10px',
                             }}
                             onClick={() => navigate('/')}
                         />
                     </Tooltip>
+                </div>
+
+                <div style={{ display: 'flex', flex: 1, justifyContent: 'center', fontWeight: 'bold', fontSize:'22px' }}>
+                    <span style={{ marginRight: '10px' }}>Rajshree Burnure</span> &
+                    <span style={{ marginLeft: '10px' }}>Omprakash Burnure</span>
+                </div>
+
+                <div style={{ display: 'flex', alignItems: 'center', gap: '15px', marginRight: '10px' }}>
                     <Tooltip title="Select All">
-                        <SelectAllIcon
+                        <DoneAllIcon
                             style={{
                                 cursor: 'pointer',
                                 fontSize: '30px',
-                                marginRight: '10px'
+                                color: isSelected ? 'green' : 'inherit', // Change color on click
                             }}
                             onClick={() => {
-                                galleryAssets.forEach(item => addToCart(item));
-                                setShowNotification(true);
-                                setTimeout(() => setShowNotification(false), 3000);
+                                setIsSelected(!isSelected); // Toggle selection state
+                                if (!isSelected) {
+                                    galleryAssets.forEach(item => addToCart(item));
+                                    setShowNotification(true);
+                                    setTimeout(() => setShowNotification(false), 3000);
+                                }
                             }}
                         />
                     </Tooltip>
