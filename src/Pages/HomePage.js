@@ -1,94 +1,85 @@
 import React, { useState, useEffect } from "react";
-import axios from 'axios';
-import "./HomePage.css"; 
-import config from '../config/config';
+import axios from "axios";
+import "./HomePage.css";
+import config from "../config/config";
 import { useNavigate } from "react-router-dom";
+import SearchBar from "../Components/SearchBar";
 
 const HomePage = () => {
   const [homePageAssets, setHomePageAssets] = useState([]);
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(true);  // For loading state
-  const [error, setError] = useState(null);  // For error handling
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
 
-  // Fetch assets assets when the component mounts
+  // Fetch assets when the component mounts
   useEffect(() => {
-    // Make a GET request to the /assets/preview API
-    axios.get(`${config.BASE_URL}/assets/preview`)
+    axios
+      .get(`${config.BASE_URL}/assets/preview`)
       .then((response) => {
-        // If the response is successful, update the state with the assets
         setHomePageAssets(response.data);
-        setLoading(false);  // Stop loading when assets is fetched
+        setLoading(false);
       })
       .catch((err) => {
-        // Handle error if the API request fails
-        console.error('Error fetching assets: ', err);
-        setError('Failed to fetch assets');
-        setLoading(false);  // Stop loading
+        console.error("Error fetching assets: ", err);
+        setError("Failed to fetch assets");
+        setLoading(false);
       });
   }, []);
 
-
   if (loading) {
-    return <div>Loading...</div>;  // Display loading message while fetching
+    return <div>Loading...</div>;
   }
 
   if (error) {
-    return <div>{error}</div>;  // Display error message if there is an error
+    return <div>{error}</div>;
   }
 
-  // Filter images based on search term
+  // Filter assets based on search term
   const filteredAssets = homePageAssets.filter((homePageAsset) =>
     homePageAsset.location.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (
- <div className="home-page">
-    {/* Search Bar */}
-    <input
-      type="text"
-      placeholder="Search by city name"
-      value={searchTerm}
-      onChange={(e) => setSearchTerm(e.target.value)}
-      className="search-bar"
-    />
+    <div className="home-page">
+      {/* Search Bar */}
+      <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
 
-    <div className="card-container">
-      {filteredAssets?.map((filteredAsset, index) => (
-        <div className="card" key={index}>
-          <div className="image-wrapper">
-            <div className="image-stack">
-              {/* {filteredAsset?.urls.map((imageUrl, ind) => (
-                    <img
-                      key={ind}
-                      src={imageUrl}
-                      alt={`${filteredAsset.customerName}-${ind}`}
-                      className="stacked-image"
-                      style={{ left: `${ind * 20}px` }} // Adjust overlap position
-                    />
-                  ))} */}
-              <img src={filteredAsset.imageUrl} alt="cover" className="image-stack"/>
+      <div className="card-container">
+        {filteredAssets.map((filteredAsset, index) => (
+          <div className="card" key={index}>
+            <div className="image-wrapper">
+              <div className="image-stack">
+                <img
+                  src={filteredAsset.imageUrl}
+                  alt="cover"
+                  className="image-stack"
+                />
+              </div>
+            </div>
+            <div className="card-info">
+              <div className="location-name">
+                <span style={{fontWeight:'500'}}>Customer Name</span>: {filteredAsset.customerName}
+              </div>
+              <div className="location-name">
+                <span style={{fontWeight:'500'}}>Location</span>: {filteredAsset.location}
+              </div>
+              <div className="location-name"><span style={{fontWeight:'500'}}>Cost</span>: ₹ 20000</div>
+            </div>
+            <div className="button-wrapper">
+              <div
+                className="btn outline"
+                onClick={() => navigate(`/gallery/${filteredAsset.groupId}`)}
+              >
+                DETAILS
+              </div>
+              <div className="btn fill">BUY NOW</div>
             </div>
           </div>
-          <div className="card-info">
-            <div className="location-name">Customer Name: {filteredAsset.customerName}</div>
-            <div className="location-name">Location: {filteredAsset.location}</div>
-            <div className="location-name">Cost: ₹ 20000</div>
-          </div>
-
-          {/* Buttons */}
-          <div className="button-wrapper">
-            <div className="btn outline" onClick={() => navigate(`/gallery/${filteredAsset.groupId}`)}>
-              DETAILS
-            </div>
-            <div className="btn fill">BUY NOW</div>
-          </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
-  </div>
   );
-
 };
 
 export default HomePage;

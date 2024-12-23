@@ -1,0 +1,26 @@
+/* GalleryCard.css */
+.pics {
+    cursor: pointer;
+    margin-bottom: 12px;
+    transition: all 350ms ease;
+}
+
+.pics:hover {
+    filter: opacity(0.8);
+}
+
+.pics img {
+    width: 100%;
+}
+
+.pics .overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 16px;
+    font-weight: bold;
+    pointer-events: none;
+    user-select: none;
+}

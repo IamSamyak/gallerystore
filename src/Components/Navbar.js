@@ -55,6 +55,10 @@ function Navbar() {
 
   return (
     <div className='navbar-wrapper'>
+      <div className='admin-info'>
+      {/* <div className="profile-icon">R</div> */}
+      <div className="profile-name"><span style={{color:'#2196f3'}}>S</span>HREE DIGITAL PHOT<span style={{color:'#2196f3'}}>O</span></div>
+      </div>
       <div className='navbar_container'>
         <ul>
           <li

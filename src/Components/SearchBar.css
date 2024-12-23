@@ -1,0 +1,56 @@
+.search-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 10px;
+  }
+  
+  .search-input-container {
+    display: flex;
+    align-items: center;
+    background-color: #f1f1f1;
+    border-radius: 50px; /* Rounded container */
+    padding: 10px 20px; /* Increased padding */
+    width: 100%;
+    max-width: 500px; /* Max width for large screens */
+    border: 1px solid #ccc;
+  }
+  
+  .search-input {
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 16px;
+    width: 100%;
+    padding: 10px; /* Increased padding inside input */
+    border-radius: 50px; /* Rounded input */
+  }
+  
+  .search-icon {
+    color: #fff; /* White color for the icon */
+    margin-right: 10px;
+    font-size: 2.75rem; /* Larger icon size */
+    padding: 5px; /* Larger padding around the icon for a bigger circular background */
+    border-radius: 50%; /* Circular border */
+    background-color: #2196f3; /* Background color of the icon */
+    border: none; /* Remove any border */
+  }
+  
+  @media (max-width: 600px) {
+    .search-input-container {
+      max-width: 90%; /* Adjust width for smaller screens */
+      padding: 8px 15px; /* Adjust padding for smaller screens */
+    }
+  
+    .search-input {
+      font-size: 14px; /* Smaller font size on smaller screens */
+      padding: 8px; /* Adjust padding for smaller screens */
+    }
+  
+    .search-icon {
+      font-size: 1.3rem; /* Adjust icon size for smaller screens */
+      padding: 10px; /* Adjust padding for smaller screens */
+    }
+  }
+  

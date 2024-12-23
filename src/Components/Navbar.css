@@ -1,8 +1,32 @@
+@import url('https://fonts.cdnfonts.com/css/monster-clubhouse');
 .navbar-wrapper {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: 100%;
+    /* border-bottom: 2px solid grey; */
+}
+
+.admin-info{
+    width: 45%;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    font-family: 'Monster Clubhouse', sans-serif;
+    font-size: 2rem;
+    color: #4a4a4a;
+    gap: 10px;
+    font-weight: bold;
+}
+
+.profile-name{
+    margin-left: 2vw;
+    /* padding: 7px 20px;
+    border-radius: 15px;
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 100%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1); */
 }
 
 .navbar_container {
@@ -10,8 +34,9 @@
     width: 55%;
     border-radius: 15px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1);
+    /* box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); */
     padding: 0 20px;
-    margin: 20px;
+    margin: 10px;
     display: flex;
     justify-content: center;
 }
@@ -33,7 +58,7 @@ li {
 }
 
 li.selected {
-    color: #2196f3; /* Neon color for selected item */
-    border-bottom: 2px solid #2196f3; /* Underline border */
+    color: #2196f3;
+    border-bottom: 2px solid #2196f3;
 }
 

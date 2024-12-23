@@ -12,6 +12,8 @@ import PreviewIcon from '@mui/icons-material/Preview';
 import Tooltip from '@mui/material/Tooltip';
 import config from '../config/config';
 import { useNavigate, useParams } from 'react-router-dom';
+import Notification from '../Components/Notification';
+import GalleryCard from '../Components/GalleryCard';
 
 function Gallery({ addToCart, isAdminLoggedIn }) {
     const { galleryGroupId } = useParams();
@@ -22,7 +24,7 @@ function Gallery({ addToCart, isAdminLoggedIn }) {
     const [modal, setModal] = useState(false);
     const [modalIndex, setModalIndex] = useState(0);
     const [showNotification, setShowNotification] = useState(false);
-    const [price, setPrice] = useState(5000); // Initial dummy price
+    const [price, setPrice] = useState(0); // Initial dummy price
     const [isEditing, setIsEditing] = useState(false); // To toggle between editable and non-editable price
     const [newPrice, setNewPrice] = useState(price);
 
@@ -74,6 +76,7 @@ function Gallery({ addToCart, isAdminLoggedIn }) {
 
     const openModal = (index) => {
         setModalIndex(index);
+        setPrice(galleryAssets[index].cost);
         setModal(true);
     };
 
@@ -179,24 +182,7 @@ function Gallery({ addToCart, isAdminLoggedIn }) {
             </div>
 
             {showNotification && (
-                <div
-                    style={{
-                        position: 'fixed',
-                        top: '20px',
-                        left: '50%',
-                        transform: 'translateX(-50%)',
-                        backgroundColor: '#28a745',
-                        color: '#fff',
-                        padding: '10px 20px',
-                        borderRadius: '5px',
-                        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
-                        zIndex: 1000,
-                        textAlign: 'center',
-                        fontWeight: 'bold',
-                    }}
-                >
-                    Added to cart successfully!!!
-                </div>
+                <Notification notificationMsg={"Added to cart successfully!!!"} />
             )}
 
             <div className={modal ? "modal open" : "modal"}>
@@ -396,26 +382,12 @@ function Gallery({ addToCart, isAdminLoggedIn }) {
                                     controls={false} // Remove controls for a clean look
                                 />
                             </div> :
-                            <div className="pics" key={index} onClick={() => openModal(index)}>
-                                <div style={{ position: 'relative' }}>
-                                    <img src={item.imageUrl} style={{ width: '100%' }} alt="gallery" />
-                                    <div
-                                        style={{
-                                            position: 'absolute',
-                                            top: '50%',
-                                            left: '50%',
-                                            transform: 'translate(-50%, -50%)',
-                                            color: 'rgba(255, 255, 255, 0.5)',
-                                            fontSize: '16px',
-                                            fontWeight: 'bold',
-                                            pointerEvents: 'none',
-                                            userSelect: 'none',
-                                        }}
-                                    >
-                                        @Ravi_Gore
-                                    </div>
-                                </div>
-                            </div>
+                            <GalleryCard
+                                key={index}
+                                index={index}
+                                imageUrl={item.imageUrl}
+                                onClick={openModal}
+                            />
                     );
                 })}
             </div>
