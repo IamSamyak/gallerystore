@@ -68,7 +68,7 @@ const AdminLogin = ({setIsAdminLoggedIn}) => {
       setOtpError('Please enter the OTP.');
       return;
     }
-
+  
     try {
       // Make a POST request to verify OTP
       const response = await axios.post(
@@ -76,9 +76,13 @@ const AdminLogin = ({setIsAdminLoggedIn}) => {
         otp, // Plain string, not JSON object
         { withCredentials: true } // Ensure cookies are sent for session persistence
       );
-
+  
       if (response && response.status === 200) {
         alert('OTP Verified Successfully!');
+        
+        // Store the JWT in sessionStorage
+        sessionStorage.setItem('jwtToken', response.data.jwtToken);
+        
         sessionStorage.setItem('isAdminLoggedIn', 'true');
         setIsAdminLoggedIn(true);
         navigate('/upload-assets');
@@ -89,6 +93,7 @@ const AdminLogin = ({setIsAdminLoggedIn}) => {
       setOtpError('An error occurred while verifying OTP. Please try again.');
     }
   };
+  
 
   // Timer for OTP expiration
   useEffect(() => {

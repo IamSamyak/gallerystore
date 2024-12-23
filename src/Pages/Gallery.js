@@ -7,7 +7,8 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import SelectAllIcon from '@mui/icons-material/SelectAll';
-import DeleteIcon from '@mui/icons-material/Delete'; // Import DeleteIcon
+import DeleteIcon from '@mui/icons-material/Delete';
+import PreviewIcon from '@mui/icons-material/Preview';
 import Tooltip from '@mui/material/Tooltip';
 import config from '../config/config';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -21,6 +22,42 @@ function Gallery({ addToCart, isAdminLoggedIn }) {
     const [modal, setModal] = useState(false);
     const [modalIndex, setModalIndex] = useState(0);
     const [showNotification, setShowNotification] = useState(false);
+    const [price, setPrice] = useState(5000); // Initial dummy price
+    const [isEditing, setIsEditing] = useState(false); // To toggle between editable and non-editable price
+    const [newPrice, setNewPrice] = useState(price);
+
+    const handlePriceEdit = () => {
+        setIsEditing(true); // Enable editing mode
+    };
+
+    const handlePriceChange = (e) => {
+        setNewPrice(e.target.value); // Update the new price value
+    };
+
+    const savePrice = async () => {
+        try {
+            // Get the JWT token from sessionStorage
+            const token = sessionStorage.getItem('jwtToken'); // Adjusted to sessionStorage
+
+            // Make the API request to update the price on the backend, including the JWT token
+            await axios.patch(
+                `${config.BASE_URL}/assets/${galleryAssets[modalIndex]?.id}/cost`,
+                { cost: newPrice },
+                {
+                    headers: {
+                        'Authorization': `Bearer ${token}`, // Attach JWT token here
+                        'Content-Type': 'application/json', // Ensure the request content type is JSON
+                    },
+                }
+            );
+
+            // Update the price in the state and disable editing mode
+            setPrice(newPrice);
+            setIsEditing(false);
+        } catch (error) {
+            console.error('Error updating price:', error);
+        }
+    };
 
     useEffect(() => {
         axios.get(`${config.BASE_URL}/assets/group/${galleryGroupId}`)
@@ -50,7 +87,20 @@ function Gallery({ addToCart, isAdminLoggedIn }) {
 
     const deleteAsset = async (assetId) => {
         try {
-            await axios.delete(`${config.BASE_URL}/assets/${assetId}`);
+            // Get the JWT token from sessionStorage
+            const token = sessionStorage.getItem('jwtToken'); // Adjusted to sessionStorage
+
+            // Make the API request to delete the asset, including the JWT token in the Authorization header
+            await axios.delete(
+                `${config.BASE_URL}/assets/${assetId}`,
+                {
+                    headers: {
+                        'Authorization': `Bearer ${token}`, // Attach JWT token here
+                    }
+                }
+            );
+
+            // Update the state after successful deletion
             setGalleryAssets(prevAssets => prevAssets.filter(asset => asset.id !== assetId));
             setShowNotification(true);
             setTimeout(() => setShowNotification(false), 3000);
@@ -59,6 +109,31 @@ function Gallery({ addToCart, isAdminLoggedIn }) {
             setError('Failed to delete asset');
         }
     };
+
+    const updatePreviewImage = async (assetId, groupId) => {
+        try {
+            // Get the JWT token from sessionStorage
+            const jwtToken = sessionStorage.getItem('jwtToken'); // Adjusted to sessionStorage
+
+            // Make the API request to update the preview image, including the JWT token in the Authorization header
+            const response = await axios.patch(
+                `${config.BASE_URL}/assets/${assetId}/preview?groupId=${groupId}`,
+                null, // No body needed as the groupId is sent in the query string
+                {
+                    headers: {
+                        'Authorization': `Bearer ${jwtToken}`, // Attach JWT token here
+                        'Content-Type': 'application/json', // Content-Type for the request
+                    }
+                }
+            );
+
+            console.log('Preview updated:', response.data);
+            // Optionally, update your UI or state with the updated asset information
+        } catch (error) {
+            console.error('Error updating preview:', error);
+            // Handle the error here (e.g., show an error message)
+        }
+    }
 
     if (loading) return <div>Loading...</div>;
     if (error) return <div>{error}</div>;
@@ -145,6 +220,86 @@ function Gallery({ addToCart, isAdminLoggedIn }) {
                 </div>
 
                 {isAdminLoggedIn ? (
+                    <div
+                        style={{
+                            position: 'absolute',
+                            top: '15px',
+                            right: '170px',
+                            transform: 'translateX(-50%)',
+                            color: '#fff',
+                            fontSize: '24px',
+                            fontWeight: 'bold',
+                            cursor: 'pointer',
+                        }}
+                        onClick={handlePriceEdit} // Click to start editing the price
+                    >
+                        {isEditing ? (
+                            <input
+                                type="number"
+                                value={newPrice}
+                                onChange={handlePriceChange}
+                                onBlur={savePrice} // Save on blur
+                                style={{
+                                    fontSize: '24px',
+                                    background: 'transparent',
+                                    border: 'none',
+                                    color: '#fff',
+                                    textAlign: 'center',
+                                    width: '80px', // Reduced width
+                                    appearance: 'none', // Remove default number input styling
+                                    MozAppearance: 'textfield', // Firefox specific
+                                    WebkitAppearance: 'none', // Webkit browsers specific
+                                    msAppearance: 'none',
+                                }}
+                            />
+                        ) : (
+                            `₹${price}` // Display the price if not editing
+                        )}
+                    </div>
+                ) : (
+                    <div
+                        style={{
+                            position: 'absolute',
+                            top: '15px',
+                            right: '170px',
+                            transform: 'translateX(-50%)',
+                            color: '#fff',
+                            fontSize: '24px',
+                            fontWeight: 'bold',
+                        }}
+                    >
+                        ₹5000
+                    </div>
+                )}
+
+                {/* Conditionally render PreviewIcon only if isAdminLoggedIn */}
+                {isAdminLoggedIn && (
+                    <Tooltip title="Mark as Banner Image">
+                        <PreviewIcon
+                            className="cart-icon"
+                            onClick={() => {
+                                const jwtToken = sessionStorage.getItem('jwt');  // Get JWT from session storage
+                                if (jwtToken) {
+                                    // Call the function to make the API request
+                                    updatePreviewImage(
+                                        galleryAssets[modalIndex]?.id,
+                                        galleryAssets[modalIndex]?.groupId,
+                                        jwtToken
+                                    );
+                                }
+                            }}
+                            style={{
+                                fontSize: '48px',
+                                cursor: 'pointer',
+                                color: '#fff',
+                                top: '10px',
+                                right: '130px',  // Adjust positioning to fit it next to the price
+                            }}
+                        />
+                    </Tooltip>
+                )}
+
+                {isAdminLoggedIn ? (
                     <Tooltip title="Delete Asset">
                         <DeleteIcon
                             className="cart-icon"
@@ -182,6 +337,7 @@ function Gallery({ addToCart, isAdminLoggedIn }) {
                     />
                 </Tooltip>
             </div>
+
 
             {modal && <>
                 <Tooltip title="Previous Image">
@@ -282,7 +438,7 @@ const styles = {
     video: {
         width: "100%",
         height: "100%",
-        objectFit: "cover", 
+        objectFit: "cover",
     },
 };
 
