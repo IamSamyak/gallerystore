@@ -5,7 +5,11 @@ const plans = [
   {
     title: 'Silver',
     price: '₹5,000',
-    features: ['Basic Photography', 'Photo Editing', 'Online Album Access'],
+    features: ['Basic Photography',
+       'Photo Editing', 
+       'Online Album Access',
+       'Online Album Access',
+    ],
   },
   {
     title: 'Gold',
@@ -13,6 +17,7 @@ const plans = [
     features: [
       'Everything in Silver',
       'Wedding Events',
+      'High-Resolution Photos',
       'High-Resolution Photos',
     ],
   },
@@ -23,6 +28,7 @@ const plans = [
       'Premium Wedding Events',
       'Custom Photo Albums',
       'Drone Photography',
+      'Drone Photography',
     ],
   },
   {
@@ -31,6 +37,7 @@ const plans = [
     features: [
       'Everything in Silver',
       'Wedding Events',
+      'High-Resolution Photos',
       'High-Resolution Photos',
     ],
   },
@@ -60,7 +67,8 @@ const PricingPage = () => {
           ))}
         </div>
         <button className={`card-btn ${['one', 'two', 'three', 'four'][index % 4]}`}>
-          Select {plan.title}
+          Choose 
+          {/* {plan.title} */}
         </button>
       </div>
     </div>

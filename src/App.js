@@ -11,6 +11,7 @@ import Gallery from './Pages/Gallery';
 import AdminLogin from './Pages/AdminLogin';
 import Payment from './Components/Payment';
 import PrivateRoute from './Components/PrivateRoute';  // Import the PrivateRoute component
+import { Footer } from './Components/Footer';
 
 function App() {
   const [cartItems, setCartItems] = useState([]);
@@ -69,6 +70,8 @@ function AppRoutes({ addToCart, cartItems, handleDeleteCartItem }) {
           element={<ShoppingCartPage cartItems={cartItems} handleDeleteCartItem={handleDeleteCartItem} />}
         />
       </Routes>
+
+      {location.pathname !== '/admin-login' && location.pathname !== '/payment' && <Footer />}
     </div>
   );
 }

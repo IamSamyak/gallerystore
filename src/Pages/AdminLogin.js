@@ -4,8 +4,9 @@ import { Alarm } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import config from '../config/config';
+import './AdminLogin.css'
 
-const AdminLogin = ({setIsAdminLoggedIn}) => {
+const AdminLogin = ({ setIsAdminLoggedIn }) => {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -18,6 +19,7 @@ const AdminLogin = ({setIsAdminLoggedIn}) => {
   const [errorMessage, setErrorMessage] = useState('');
   const [loginMessage, setLoginMessage] = useState(''); // Added login message state
   const [otpError, setOtpError] = useState(''); // Added OTP error state
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false); // New state for button disable
 
   // Handle form input changes
   const handleInputChange = (e) => {
@@ -32,6 +34,7 @@ const AdminLogin = ({setIsAdminLoggedIn}) => {
 
   // Handle login (email and password validation with API)
   const handleLogin = async () => {
+    setIsButtonDisabled(true);
     const { email, password } = formData;
 
     if (!email || !password) {
@@ -43,23 +46,32 @@ const AdminLogin = ({setIsAdminLoggedIn}) => {
       // Make a POST request to validate admin credentials
       const response = await axios.post(`${config.BASE_URL}/api/admin/login`, {
         email,
-        password
-      });
+        password,
+      },{ withCredentials: true });
 
       if (response && response.status === 200) {
         setIsLoggedIn(true);
         setIsOtpSent(true);
-        setLoginMessage('Email and password verified. OTP sent to your email.'); // Set login success message
-        setErrorMessage('');
-        setTimer(300); // Reset timer
+        setLoginMessage('Email and password verified. OTP sent to your email.');
+        setErrorMessage('');  // Clear error message on success
+        setTimer(300);  // Reset timer
       } else {
+        // Handle non-200 response
         setErrorMessage('Invalid email or password.');
         setLoginMessage('');
       }
     } catch (error) {
-      setErrorMessage('An error occurred. Please try again.');
+      // Check for a 401 error status
+      if (error.response && error.response.status === 401) {
+        setErrorMessage('Invalid email or password.');
+      } else {
+        setErrorMessage('An error occurred. Please try again.');
+      }
       setLoginMessage('');
     }
+    setTimeout(() => {
+      setIsButtonDisabled(false);
+    }, 3000);
   };
 
   // Handle OTP verification using the /verify-otp route
@@ -68,21 +80,24 @@ const AdminLogin = ({setIsAdminLoggedIn}) => {
       setOtpError('Please enter the OTP.');
       return;
     }
-  
+
     try {
       // Make a POST request to verify OTP
       const response = await axios.post(
         `${config.BASE_URL}/api/admin/verify-otp`,
-        otp, // Plain string, not JSON object
-        { withCredentials: true } // Ensure cookies are sent for session persistence
+        { otp },  // Send the OTP as part of the request body
+        {
+          headers: {
+            'Content-Type': 'application/json' // Ensure content type is JSON
+          },
+          withCredentials: true // Ensure cookies are sent for session persistence
+        }
       );
-  
+      
+
       if (response && response.status === 200) {
         alert('OTP Verified Successfully!');
-        
-        // Store the JWT in sessionStorage
         sessionStorage.setItem('jwtToken', response.data.jwtToken);
-        
         sessionStorage.setItem('isAdminLoggedIn', 'true');
         setIsAdminLoggedIn(true);
         navigate('/upload-assets');
@@ -93,7 +108,6 @@ const AdminLogin = ({setIsAdminLoggedIn}) => {
       setOtpError('An error occurred while verifying OTP. Please try again.');
     }
   };
-  
 
   // Timer for OTP expiration
   useEffect(() => {
@@ -117,128 +131,64 @@ const AdminLogin = ({setIsAdminLoggedIn}) => {
   };
 
   return (
-    <div
-      style={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        minHeight: '100vh',
-        padding: '20px',
-      }}
-    >
-      <div
-        style={{
-          width: '100%',
-          maxWidth: '400px',
-          padding: '30px',
-          borderRadius: '8px',
-          boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-          border: '1px solid #ddd',
-        }}
-      >
-        <h2
-          style={{
-            textAlign: 'center',
-            color: '#2196f3',
-            marginBottom: '20px',
-          }}
-        >
-          Admin Login
-        </h2>
+    <div className="admin-login-container">
+      <div className="admin-login-form">
+        <h2 className="admin-login-title">Admin Login</h2>
 
         {!isLoggedIn ? (
           <>
-            <div style={{ marginBottom: '20px' }}>
-              <label
-                htmlFor="email"
-                style={{ fontWeight: 'bold', display: 'block', marginBottom: '5px' }}
-              >
-                Email
-              </label>
+            <div className="admin-login-input">
+              <label htmlFor="email" className="admin-login-label">Email</label>
               <input
                 type="email"
                 id="email"
                 name="email"
                 value={formData.email}
                 onChange={handleInputChange}
-                style={{
-                  width: '100%',
-                  padding: '10px',
-                  border: '1px solid #ccc',
-                  borderRadius: '4px',
-                }}
+                className="admin-login-input-field"
               />
             </div>
 
-            <div style={{ marginBottom: '20px' }}>
-              <label
-                htmlFor="password"
-                style={{ fontWeight: 'bold', display: 'block', marginBottom: '5px' }}
-              >
-                Password
-              </label>
+            <div className="admin-login-input">
+              <label htmlFor="password" className="admin-login-label">Password</label>
               <input
                 type="password"
                 id="password"
                 name="password"
                 value={formData.password}
                 onChange={handleInputChange}
-                style={{
-                  width: '100%',
-                  padding: '10px',
-                  border: '1px solid #ccc',
-                  borderRadius: '4px',
-                }}
+                className="admin-login-input-field"
               />
             </div>
 
-            {errorMessage && <div style={{ color: 'red', marginBottom: '10px' }}>{errorMessage}</div>}
-
-            {loginMessage && <div style={{ color: 'green', marginBottom: '10px' }}>{loginMessage}</div>} {/* Display login message */}
+            {errorMessage && <div className="admin-login-error">{errorMessage}</div>}
+            {loginMessage && <div className="admin-login-success">{loginMessage}</div>}
 
             <button
-              style={{
-                width: '100%',
-                padding: '10px',
-                backgroundColor: '#2196f3',
-                color: '#fff',
-                border: 'none',
-                borderRadius: '4px',
-                cursor: 'pointer',
-                fontSize: '16px',
-              }}
+              className={`admin-login-button ${isButtonDisabled ? 'disabled' : ''}`}
               onClick={handleLogin}
+              disabled={isButtonDisabled} // Disable button on click
             >
               Login
             </button>
           </>
         ) : isOtpSent ? (
           <>
-            <div style={{ marginBottom: '20px' }}>
-              <label
-                htmlFor="otp"
-                style={{ fontWeight: 'bold', display: 'block', marginBottom: '5px' }}
-              >
-                Enter OTP
-              </label>
+            <div className="admin-login-input">
+              <label htmlFor="otp" className="admin-login-label">Enter OTP</label>
               <input
                 type="text"
                 id="otp"
                 name="otp"
                 value={otp}
                 onChange={handleOtpChange}
-                style={{
-                  width: '100%',
-                  padding: '10px',
-                  border: '1px solid #ccc',
-                  borderRadius: '4px',
-                }}
+                className="admin-login-input-field"
               />
             </div>
 
-            {otpError && <div style={{ color: 'red', marginBottom: '10px' }}>{otpError}</div>} {/* Display OTP error */}
+            {otpError && <div className="admin-login-error">{otpError}</div>}
 
-            <div style={{ marginBottom: '10px' }}>
+            <div className="admin-login-timer">
               <IconButton>
                 <Alarm />
                 <span>{formatTime(timer)}</span>
@@ -246,16 +196,7 @@ const AdminLogin = ({setIsAdminLoggedIn}) => {
             </div>
 
             <button
-              style={{
-                width: '100%',
-                padding: '10px',
-                backgroundColor: '#2196f3',
-                color: '#fff',
-                border: 'none',
-                borderRadius: '4px',
-                cursor: 'pointer',
-                fontSize: '18px',
-              }}
+              className="admin-login-button"
               onClick={handleVerifyOtp}
             >
               Verify OTP

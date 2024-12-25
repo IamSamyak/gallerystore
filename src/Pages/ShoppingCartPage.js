@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useNavigate } from "react-router-dom";
 import "./ShoppingCartPage.css";
+import VideoFileIcon from '@mui/icons-material/VideoFile';
+import PhotoIcon from '@mui/icons-material/Photo';
 
 const ShoppingCartPage = ({ cartItems, handleDeleteCartItem }) => {
   const navigate = useNavigate();
@@ -16,28 +18,64 @@ const ShoppingCartPage = ({ cartItems, handleDeleteCartItem }) => {
     navigate('/payment');
   };
 
+  const getRandomMedia = (name) => {
+    const isVideo = Math.random() < 0.5; // Randomly choose between image and video
+    if (isVideo) {
+      return (
+        <span className="media-type">
+          Video <VideoFileIcon sx={{color:'#475569'}}/>
+        </span>
+      );
+    }
+    return (
+      <span className="media-type">
+        Image <PhotoIcon sx={{color:'#475569'}} />
+      </span>
+    );
+  };  
+
   return (
     <div className="shopping-cart-container">
       <div className="order-card">
-        <h2>Your Shopping Cart</h2>
-        <p>You have {cartItems ? cartItems.length : 0} items in your cart.</p>
+        <div style={{display:'flex',justifyContent:'space-between',alignItems:'center'}}>
+        <h2>Shopping Cart</h2>
+      <p style={{fontWeight:'500',fontSize:'1.25rem'}}>{cartItems ? cartItems.length : 0} items</p>
+        </div>
         <div className="cart-items-container">
-          {cartItems?.map((item) => (
-            <div key={item.id} className="cart-item">
-              <img src={item.imageUrl} alt="Product" className="cart-item-image" />
-              <span className="cart-item-price">₹{item.cost}</span>
-              <DeleteIcon
-                onClick={() => handleDeleteCartItem(item.id)}
-                className="delete-icon"
-              />
-            </div>
-          ))}
+          <table className="cart-items-table">
+            <thead>
+              <tr>
+                <th>Nice</th>
+                <th>Media Type</th>
+                <th>Price</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody className="">
+              {cartItems?.map((item, index) => (
+                <tr
+                  key={item.id}
+                  className={index % 2 === 0 ? "even-row" : "odd-row"}
+                >
+                  <td><img src={item.imageUrl} alt="Product" className="cart-item-image" /></td>
+                  <td>{getRandomMedia(item.name)}</td>
+                  <td>₹{item.cost}</td>
+                  <td>
+                    <DeleteIcon
+                      onClick={() => handleDeleteCartItem(item.id)}
+                      className="delete-icon"
+                    />
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       </div>
 
       <div className="order-summary-card">
         <h3>Order Summary</h3>
-        <p className="total-price">Total: ₹{calculateTotal()}</p>
+        <p className="total-price"><span style={{fontWeight:'550'}}>Total</span>: ₹{calculateTotal()}</p>
         <button onClick={handleCheckout} className="checkout-button">Checkout</button>
 
         <div className="payment-methods">

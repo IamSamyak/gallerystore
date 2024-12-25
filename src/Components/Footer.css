@@ -1,0 +1,83 @@
+.footer {
+  background-color: #2d2d2d;
+  color: white;
+  padding: 40px 20px;
+  font-family: Arial, sans-serif;
+}
+
+.footer-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.footer-section {
+  flex: 1;
+  min-width: 250px;
+  margin-bottom: 20px;
+}
+
+.footer-logo.full-height {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+}
+
+.footer-logo h1 {
+  font-size: 48px; /* Larger font size */
+  font-weight: bold;
+  color: white;
+  text-transform: uppercase; /* Converts text to uppercase */
+  text-align: left; /* Aligns text to the left */
+  margin: 0;
+}
+
+.footer-logo {
+  flex: 2; /* Make footer-logo take more space */
+}
+
+
+.footer-section h3,
+.footer-section p,
+.footer-section a {
+  line-height: 1.6;
+  font-size: 18px;
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+.footer-section a {
+  color: white;
+  text-decoration: none;
+}
+
+.footer-social {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.footer-social-row {
+  display: flex;
+  gap: 30px; /* Increased spacing */
+}
+
+.footer-bottom {
+  text-align: center;
+  margin-top: 20px;
+  border-top: 1px solid #444;
+  padding-top: 10px;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+.typewriter {
+  font-weight: bold;
+  font-size: 48px; /* Larger font size */
+  /* font-family: 'Courier New', Courier, monospace; */
+  text-transform: uppercase; /* Ensures typed text is uppercase */
+  height: 56px;
+}

@@ -1,24 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './Gallery.css';
-import CloseIcon from '@mui/icons-material/Close';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 // import ArrowBackIcon from '../Assets/backwardicon.png'
-import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import DoneAllIcon from '@mui/icons-material/DoneAll';
-import DeleteIcon from '@mui/icons-material/Delete';
-import PreviewIcon from '@mui/icons-material/Preview';
-import Tooltip from '@mui/material/Tooltip';
 import config from '../config/config';
 import { useNavigate, useParams } from 'react-router-dom';
 import Notification from '../Components/Notification';
 import GalleryCard from '../Components/GalleryCard';
+import GalleryTopMenuBar from '../Components/GalleryTopMenuBar';
+import GalleryModalMenuOptions from '../Components/GalleryModalMenuOptions';
+import VideoCard from '../Components/VideoCard';
 
 function Gallery({ addToCart, isAdminLoggedIn }) {
     const { galleryGroupId } = useParams();
-    const navigate = useNavigate();
     const [galleryAssets, setGalleryAssets] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -145,60 +138,13 @@ function Gallery({ addToCart, isAdminLoggedIn }) {
 
     return (
         <>
-            <div
-                style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'space-between',
-                    backgroundColor: '#f5f5f5',
-                    width: '98.5%',
-                    margin: '20px auto',
-                    border: '1px solid #ccc',
-                    // boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1)',
-                    borderRadius: '8px',
-                    padding: '15px 10px',
-                    marginBottom: '20px',
-                }}
-            >
-
-                <div style={{ display: 'flex', alignItems: 'center', gap: '15px', marginLeft: '10px' }}>
-                    <Tooltip title="Go Back">
-                        <ArrowBackIcon
-                            style={{
-                                cursor: 'pointer',
-                                fontSize: '30px',
-                                marginRight: '10px',
-                            }}
-                            onClick={() => navigate('/')}
-                        />
-                    </Tooltip>
-                </div>
-
-                <div style={{ display: 'flex', flex: 1, justifyContent: 'center', fontWeight: 'bold', fontSize:'22px' }}>
-                    <span style={{ marginRight: '10px' }}>Rajshree Burnure</span> &
-                    <span style={{ marginLeft: '10px' }}>Omprakash Burnure</span>
-                </div>
-
-                <div style={{ display: 'flex', alignItems: 'center', gap: '15px', marginRight: '10px' }}>
-                    <Tooltip title="Select All">
-                        <DoneAllIcon
-                            style={{
-                                cursor: 'pointer',
-                                fontSize: '30px',
-                                color: isSelected ? 'green' : 'inherit', // Change color on click
-                            }}
-                            onClick={() => {
-                                setIsSelected(!isSelected); // Toggle selection state
-                                if (!isSelected) {
-                                    galleryAssets.forEach(item => addToCart(item));
-                                    setShowNotification(true);
-                                    setTimeout(() => setShowNotification(false), 3000);
-                                }
-                            }}
-                        />
-                    </Tooltip>
-                </div>
-            </div>
+            <GalleryTopMenuBar
+                isSelected={isSelected}
+                setIsSelected={setIsSelected}
+                galleryAssets={galleryAssets}
+                addToCart={addToCart}
+                setShowNotification={setShowNotification}
+            />
 
             {showNotification && (
                 <Notification notificationMsg={"Added to cart successfully!!!"} />
@@ -213,7 +159,7 @@ function Gallery({ addToCart, isAdminLoggedIn }) {
                             top: '50%',
                             left: '50%',
                             transform: 'translate(-50%, -50%)',
-                            color: 'rgba(255, 255, 255, 0.5)',
+                            color: 'rgba(255, 255, 255, 0.6)',
                             fontSize: '24px',
                             fontWeight: 'bold',
                             pointerEvents: 'none',
@@ -224,213 +170,42 @@ function Gallery({ addToCart, isAdminLoggedIn }) {
                     </div>
                 </div>
 
-                {isAdminLoggedIn ? (
-                    <div
-                        style={{
-                            position: 'absolute',
-                            top: '15px',
-                            right: '170px',
-                            transform: 'translateX(-50%)',
-                            color: '#fff',
-                            fontSize: '24px',
-                            fontWeight: 'bold',
-                            cursor: 'pointer',
-                        }}
-                        onClick={handlePriceEdit} // Click to start editing the price
-                    >
-                        {isEditing ? (
-                            <input
-                                type="number"
-                                value={newPrice}
-                                onChange={handlePriceChange}
-                                onBlur={savePrice} // Save on blur
-                                style={{
-                                    fontSize: '24px',
-                                    background: 'transparent',
-                                    border: 'none',
-                                    color: '#fff',
-                                    textAlign: 'center',
-                                    width: '80px', // Reduced width
-                                    appearance: 'none', // Remove default number input styling
-                                    MozAppearance: 'textfield', // Firefox specific
-                                    WebkitAppearance: 'none', // Webkit browsers specific
-                                    msAppearance: 'none',
-                                }}
-                            />
-                        ) : (
-                            `₹${price}` // Display the price if not editing
-                        )}
-                    </div>
-                ) : (
-                    <div
-                        style={{
-                            position: 'absolute',
-                            top: '15px',
-                            right: '170px',
-                            transform: 'translateX(-50%)',
-                            color: '#fff',
-                            fontSize: '24px',
-                            fontWeight: 'bold',
-                        }}
-                    >
-                        ₹5000
-                    </div>
-                )}
-
-                {/* Conditionally render PreviewIcon only if isAdminLoggedIn */}
-                {isAdminLoggedIn && (
-                    <Tooltip title="Mark as Banner Image">
-                        <PreviewIcon
-                            className="cart-icon"
-                            onClick={() => {
-                                const jwtToken = sessionStorage.getItem('jwt');  // Get JWT from session storage
-                                if (jwtToken) {
-                                    // Call the function to make the API request
-                                    updatePreviewImage(
-                                        galleryAssets[modalIndex]?.id,
-                                        galleryAssets[modalIndex]?.groupId,
-                                        jwtToken
-                                    );
-                                }
-                            }}
-                            style={{
-                                fontSize: '48px',
-                                cursor: 'pointer',
-                                color: '#fff',
-                                top: '10px',
-                                right: '130px',  // Adjust positioning to fit it next to the price
-                            }}
-                        />
-                    </Tooltip>
-                )}
-
-                {isAdminLoggedIn ? (
-                    <Tooltip title="Delete Asset">
-                        <DeleteIcon
-                            className="cart-icon"
-                            onClick={() => deleteAsset(galleryAssets[modalIndex]?.id)}
-                            style={{
-                                fontSize: '48px',
-                                cursor: 'pointer',
-                                color: '#fff',
-                            }}
-                        />
-                    </Tooltip>
-                ) : (
-                    <Tooltip title="Add to Cart">
-                        <ShoppingCartIcon
-                            className="cart-icon"
-                            onClick={() => {
-                                addToCart(galleryAssets[modalIndex]);
-                                setShowNotification(true);
-                                setTimeout(() => setShowNotification(false), 3000);
-                            }}
-                            style={{
-                                fontSize: '48px',
-                                cursor: 'pointer',
-                                color: '#fff',
-                            }}
-                        />
-                    </Tooltip>
-                )}
-
-                <Tooltip title="Close">
-                    <CloseIcon
-                        className="close-icon"
-                        onClick={() => setModal(false)}
-                        style={{ fontSize: '48px', cursor: 'pointer' }}
-                    />
-                </Tooltip>
+                <GalleryModalMenuOptions
+                    isAdminLoggedIn={isAdminLoggedIn}
+                    price={price}
+                    newPrice={newPrice}
+                    setNewPrice={setNewPrice}
+                    galleryAssets={galleryAssets}
+                    modalIndex={modalIndex}
+                    addToCart={addToCart}
+                    deleteAsset={deleteAsset}
+                    updatePreviewImage={updatePreviewImage}
+                    setShowNotification={setShowNotification}
+                    handlePriceChange={handlePriceChange}
+                    setModal={setModal}
+                    handlePriceEdit={handlePriceEdit}
+                    isEditing={isEditing}
+                    savePrice={savePrice}
+                    prevImage={prevImage}
+                    nextImage={nextImage}
+                />
             </div>
-
-
-            {modal && <>
-                <Tooltip title="Previous Image">
-                    <ArrowBackIosNewIcon
-                        style={{
-                            position: 'fixed',
-                            top: '50%',
-                            left: '0',
-                            transform: 'translateY(-50%)',
-                            fontSize: '48px',
-                            height: '5rem',
-                            width: '2rem',
-                            cursor: 'pointer',
-                            color: '#fff',
-                            borderRadius: '5px 0 0 5px',
-                            backgroundColor: 'rgba(255, 255 , 255, 0.4)',
-                            zIndex: 1000
-                        }}
-                        onClick={prevImage}
-                    />
-                </Tooltip>
-
-                <Tooltip title="Next Image">
-                    <ArrowForwardIosIcon
-                        style={{
-                            position: 'fixed',
-                            top: '50%',
-                            right: '0',
-                            transform: 'translateY(-50%)',
-                            fontSize: '48px',
-                            height: '5rem',
-                            width: '2rem',
-                            cursor: 'pointer',
-                            color: '#fff',
-                            borderRadius: '0 5px 5px 0',
-                            backgroundColor: 'rgba(255, 255 , 255, 0.4)',
-                            zIndex: 1000
-                        }}
-                        onClick={nextImage}
-                    />
-                </Tooltip>
-            </>}
 
             <div className="gallery">
                 {galleryAssets?.map((item, index) => {
                     return (
-                        index == galleryAssets.length - 1 ?
-                            <div style={styles.card}>
-                                <video
-                                    style={styles.video}
-                                    src='https://videocdn.cdnpk.net/videos/06caf8ac-1e6a-444e-98b5-0a0cfefe0a73/horizontal/previews/watermarked/large.mp4'
-                                    autoPlay
-                                    loop
-                                    muted
-                                    playsInline
-                                    controls={false} // Remove controls for a clean look
-                                />
-                            </div> :
-                            <GalleryCard
-                                key={index}
-                                index={index}
-                                imageUrl={item.imageUrl}
-                                onClick={openModal}
-                            />
+                        <GalleryCard
+                            key={index}
+                            index={index}
+                            imageUrl={item.imageUrl}
+                            onClick={openModal}
+                        />
                     );
                 })}
+                {/* <VideoCard src="https://videocdn.cdnpk.net/videos/06caf8ac-1e6a-444e-98b5-0a0cfefe0a73/horizontal/previews/watermarked/large.mp4" /> */}
             </div>
         </>
     );
 }
-
-const styles = {
-    card: {
-        width: "100%",
-        height: "100%",
-        border: "1px solid #ddd",
-        borderRadius: "8px",
-        overflow: "hidden",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-    },
-    video: {
-        width: "100%",
-        height: "100%",
-        objectFit: "cover",
-    },
-};
 
 export default Gallery;

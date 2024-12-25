@@ -17,7 +17,7 @@ const HomePage = () => {
     axios
       .get(`${config.BASE_URL}/assets/preview`)
       .then((response) => {
-        setHomePageAssets(response.data);
+        setHomePageAssets([...response.data]);
         setLoading(false);
       })
       .catch((err) => {
@@ -82,6 +82,10 @@ const HomePage = () => {
               <div className="location-name">
                 <span style={{ fontWeight: "500" }}>Location</span>:{" "}
                 {filteredAsset.location}
+              </div>
+              <div className="location-name">
+                <span style={{ fontWeight: "500" }}>Date</span>:{" "}
+                25-09-2022
               </div>
               <div className="location-name">
                 <span style={{ fontWeight: "500" }}>Cost</span>: ₹ 20000

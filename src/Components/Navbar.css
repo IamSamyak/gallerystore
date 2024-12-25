@@ -5,6 +5,8 @@
     align-items: center;
     width: 100%;
     /* border-bottom: 2px solid grey; */
+    /* background-color: #2d2d2d;
+    color: #fff; */
 }
 
 .admin-info{
@@ -30,11 +32,9 @@
 }
 
 .navbar_container {
-    background-color: #fff;
     width: 55%;
     border-radius: 15px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1);
-    /* box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); */
+    /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1); */
     padding: 0 20px;
     margin: 10px;
     display: flex;
@@ -60,5 +60,7 @@ li {
 li.selected {
     color: #2196f3;
     border-bottom: 2px solid #2196f3;
+    /* color: #D15151;
+    border-bottom: 2px solid #D15151; */
 }
 

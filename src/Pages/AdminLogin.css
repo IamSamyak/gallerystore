@@ -1,0 +1,157 @@
+/* Container for the login form */
+.admin-login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+    background-color: #f4f4f4; /* Light background for the container */
+  }
+  
+  /* The main login form styling */
+  .admin-login-form {
+    width: 100%;
+    max-width: 400px;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ddd;
+    background-color: #fff; /* White background for the form */
+  }
+  
+  /* Title of the login form */
+  .admin-login-title {
+    text-align: center;
+    color: #2196f3; /* Primary color for the title */
+    margin-bottom: 20px;
+    font-size: 24px;
+    font-weight: 600;
+  }
+  
+  /* Styling for the input fields */
+  .admin-login-input {
+    margin-bottom: 20px;
+  }
+  
+  .admin-login-label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  .admin-login-input-field {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
+  }
+  
+  /* Input focus state */
+  .admin-login-input-field:focus {
+    border-color: #2196f3;
+    outline: none;
+  }
+  
+  /* Error message styling */
+  .admin-login-error {
+    color: red;
+    margin-bottom: 10px;
+    font-size: 14px;
+    font-weight: 500;
+  }
+  
+  /* Success message styling */
+  .admin-login-success {
+    color: green;
+    margin-bottom: 10px;
+    font-size: 14px;
+    font-weight: 500;
+  }
+  
+  /* Styling for the login button */
+  .admin-login-button {
+    width: 100%;
+    padding: 10px;
+    background-color: #2196f3; /* Primary color */
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    box-sizing: border-box;
+  }
+  
+  /* Styling for the disabled button */
+  .admin-login-button.disabled {
+    background-color: #b0bec5; /* Gray out the button when disabled */
+    cursor: not-allowed;
+    opacity: 0.6; /* Apply opacity for a faded effect */
+  }
+  
+  /* Button hover state */
+  .admin-login-button:hover:not(.disabled) {
+    background-color: #1976d2; /* Darker shade of blue on hover */
+  }
+  
+  /* OTP timer section styling */
+  .admin-login-timer {
+    margin-bottom: 10px;
+  }
+  
+  .admin-login-timer span {
+    margin-left: 10px;
+    font-size: 14px;
+    color: #333;
+  }
+  
+  /* Styling for OTP input field */
+  .admin-login-input-field-otp {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    box-sizing: border-box;
+  }
+  
+  /* Label for OTP field */
+  .admin-login-label-otp {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  /* Styling for the verify OTP button */
+  .admin-login-verify-button {
+    width: 100%;
+    padding: 10px;
+    background-color: #2196f3;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+  }
+  
+  /* Verify OTP button hover state */
+  .admin-login-verify-button:hover {
+    background-color: #1976d2;
+  }
+  
+  /* Add padding to the input fields and buttons to maintain layout */
+  input, button {
+    margin-bottom: 10px;
+  }
+  
+  /* Styling for the error messages in OTP section */
+  .admin-login-error-otp {
+    color: red;
+    font-size: 14px;
+    margin-top: 5px;
+  }
+  
