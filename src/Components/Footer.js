@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import './Footer.css';
+import COMPANY_LOGO from '../Assets/SHREE_DIGITAL_PHOTO_NO_BACKGROUND.png'
 
 export const Footer = () => {
   const phrases = [
     'Timeless moments.',
     'Captured perfection.',
-    'Unforgettable memories.',
+    'Endless memories.',
     'Story in frames.'
   ];
 
@@ -52,10 +53,18 @@ export const Footer = () => {
   return (
     <footer className="footer">
       <div className="footer-container">
-        
         {/* Logo and About Section */}
+        {/* <div className="logo-container" style={{marginLeft:'2vw',marginTop:'10px'}}>
+          <img
+            src={COMPANY_LOGO}
+            height={100}
+            width={100}
+            style={{backgroundColor:'white'}}
+            alt="Shree Digital Photo Logo"
+            className="logo-image"
+          />
+        </div> */}
         <div className="footer-section footer-logo">
-          {/* <img src="logo.png" alt="Photographer Logo" /> */}
           <h1>
             COME FOR THE PHOTOS, STAY FOR THE{' '}
             <span className="typewriter" style={{ color: '#D15151' }}>{typedText}</span>
@@ -88,7 +97,6 @@ export const Footer = () => {
             </a>
           </div>
         </div>
-
       </div>
 
       {/* Footer Bottom */}

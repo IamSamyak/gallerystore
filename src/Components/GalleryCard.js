@@ -1,10 +1,11 @@
 import React from 'react';
+import CompanyLogo from '../Assets/image-gallery.png';
 
 const GalleryCard = ({ index, imageUrl, onClick }) => {
   return (
     <div className="pics" key={index} onClick={() => onClick(index)}>
       <div style={{ position: 'relative' }}>
-        <img src={imageUrl} style={{ width: '100%', borderRadius:'20px' }} alt="gallery" />
+        <img src={imageUrl} style={{ width: '100%', borderRadius: '20px' }} alt="gallery" />
         <div
           style={{
             position: 'absolute',
@@ -18,7 +19,16 @@ const GalleryCard = ({ index, imageUrl, onClick }) => {
             userSelect: 'none',
           }}
         >
-          @Ravi_Gore
+          <div className="profile-name">
+            SHREE DIGITAL
+            <img
+              src={CompanyLogo}
+              height={40}
+              width={40}
+              style={{ backgroundColor: 'transparent', filter:'invert(100%)' }}
+              alt="Shree Digital Photo Logo"
+              className="logo-image"
+            /> PHOTO</div>
         </div>
       </div>
     </div>

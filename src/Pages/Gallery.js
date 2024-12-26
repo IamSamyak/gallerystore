@@ -9,6 +9,7 @@ import GalleryCard from '../Components/GalleryCard';
 import GalleryTopMenuBar from '../Components/GalleryTopMenuBar';
 import GalleryModalMenuOptions from '../Components/GalleryModalMenuOptions';
 import VideoCard from '../Components/VideoCard';
+import CompanyLogo from '../Assets/image-gallery.png';
 
 function Gallery({ addToCart, isAdminLoggedIn }) {
     const { galleryGroupId } = useParams();
@@ -166,7 +167,17 @@ function Gallery({ addToCart, isAdminLoggedIn }) {
                             userSelect: 'none',
                         }}
                     >
-                        @Ravi_Gore
+                        <div className="profile-name" style={{ fontSize: '22px', width: '100%' }}>
+                            SHREE DIGITAL
+                            <img
+                                src={CompanyLogo}
+                                height={40}
+                                width={40}
+                                style={{ backgroundColor: 'transparent', filter: 'invert(100%)', height: '10%', width: '10%' }}
+                                alt="Shree Digital Photo Logo"
+                                className="logo-image"
+                            />
+                            PHOTO</div>
                     </div>
                 </div>
 

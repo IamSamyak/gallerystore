@@ -7,7 +7,8 @@
 
 .footer-container {
   max-width: 1200px;
-  margin: 0 auto;
+  max-width: 90%;
+  margin: 0 auto; 
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
@@ -33,6 +34,24 @@
   text-transform: uppercase; /* Converts text to uppercase */
   text-align: left; /* Aligns text to the left */
   margin: 0;
+}
+
+.footer-logo-container {
+  flex: 2;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.footer-logo-wrapper {
+  background-color: white; /* White background for transparency */
+  padding: 10px;
+  border-radius: 8px;
+}
+
+.footer-logo-image {
+  max-width: 100px;
+  max-height: 100px;
 }
 
 .footer-logo {

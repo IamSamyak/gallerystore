@@ -12,6 +12,7 @@ import AdminLogin from './Pages/AdminLogin';
 import Payment from './Components/Payment';
 import PrivateRoute from './Components/PrivateRoute';  // Import the PrivateRoute component
 import { Footer } from './Components/Footer';
+import FileUpload from './Pages/TempAsset';
 
 function App() {
   const [cartItems, setCartItems] = useState([]);
@@ -57,6 +58,7 @@ function AppRoutes({ addToCart, cartItems, handleDeleteCartItem }) {
       <Routes>
         <Route path="/" element={<Homepage addToCart={addToCart} />} />
         <Route path="/pricing" element={<PricingPage />} />
+        <Route path="/file-upload" element={<FileUpload />} />
         <Route path="/contact-us" element={<ContactUsPage />} />
         <Route path="/payment" element={<Payment />} />
         <Route path="/gallery/:galleryGroupId" element={<Gallery addToCart={addToCart} isAdminLoggedIn={isAdminLoggedIn} />} />

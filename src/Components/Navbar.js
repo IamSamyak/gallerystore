@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import CompanyLogo from '../Assets/image-gallery.png';
 import './Navbar.css';
 
 function Navbar() {
   const navigate = useNavigate(); // Use navigate from react-router-dom
   const location = useLocation(); // Get the current location (route)
   const [selectedLink, setSelectedLink] = useState("Home");
-  const [isAdminLoggedIn, setIsAdminLoggedIn] = useState(false); 
+  const [isAdminLoggedIn, setIsAdminLoggedIn] = useState(false);
 
   useEffect(() => {
     // Check if 'isAdminLoggedIn' exists in sessionStorage
@@ -43,9 +44,9 @@ function Navbar() {
       navigate('/upload-assets'); // Navigate to Upload Assets page (for admin)
     } else if (link === 'Cart' && !isAdminLoggedIn) {
       navigate('/shopping-cart'); // Navigate to Shopping Cart page (for normal users)
-    }else if (link === 'Contact Us' && !isAdminLoggedIn) {
+    } else if (link === 'Contact Us' && !isAdminLoggedIn) {
       navigate('/contact-us'); // Navigate to Shopping Cart page (for normal users)
-    } 
+    }
     else if (link === 'Logout') {
       sessionStorage.removeItem('isAdminLoggedIn'); // Remove admin login status from sessionStorage
       setIsAdminLoggedIn(false); // Update state to reflect that the user is logged out
@@ -56,8 +57,15 @@ function Navbar() {
   return (
     <div className='navbar-wrapper'>
       <div className='admin-info'>
-      {/* <div className="profile-icon">R</div> */}
-      <div className="profile-name">SHREE DIGITAL PHOTO</div>
+        <div className="profile-name">         
+          SHREE DIGITAL <img
+            src={CompanyLogo}
+            height={40}
+            width={40}
+            style={{ backgroundColor: 'white' }}
+            alt="Shree Digital Photo Logo"
+            className="logo-image"
+          /> PHOTO</div>
       </div>
       <div className='navbar_container'>
         <ul>

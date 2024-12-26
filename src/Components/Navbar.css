@@ -14,7 +14,7 @@
     display: flex;
     justify-content: start;
     align-items: center;
-    font-family: 'Monster Clubhouse', sans-serif;
+    /* font-family: 'Monster Clubhouse', sans-serif; */
     font-size: 2rem;
     color: #4a4a4a;
     gap: 10px;
@@ -23,12 +23,13 @@
 
 .profile-name{
     margin-left: 2vw;
-    /* padding: 7px 20px;
+    /* padding: 7px 20px; */
     border-radius: 15px;
     display: flex;
-    justify-content: center;
+    gap: 7px;
+    /* justify-content: center; */
     align-items: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1); */
+    /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1); */
 }
 
 .navbar_container {
