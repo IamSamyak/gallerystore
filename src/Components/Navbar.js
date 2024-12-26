@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import CompanyLogo from '../Assets/image-gallery.png';
+import NavbarLogo from '../Assets/NavbarLogo.png';
 import './Navbar.css';
 
 function Navbar() {
@@ -57,15 +58,9 @@ function Navbar() {
   return (
     <div className='navbar-wrapper'>
       <div className='admin-info'>
-        <div className="profile-name">         
-          SHREE DIGITAL <img
-            src={CompanyLogo}
-            height={40}
-            width={40}
-            style={{ backgroundColor: 'white' }}
-            alt="Shree Digital Photo Logo"
-            className="logo-image"
-          /> PHOTO</div>
+        <div className="profile-name" >         
+          <img src={NavbarLogo} alt="Logo" className="logo-image" />
+        </div>
       </div>
       <div className='navbar_container'>
         <ul>

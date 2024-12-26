@@ -4,6 +4,7 @@ import "./HomePage.css";
 import config from "../config/config";
 import { useNavigate } from "react-router-dom";
 import SearchBar from "../Components/SearchBar";
+import ImageSlider from "../Components/ImageSlider";
 
 const HomePage = () => {
   const [homePageAssets, setHomePageAssets] = useState([]);
@@ -42,15 +43,16 @@ const HomePage = () => {
 
   return (
     <div className="home-page">
-      {/* Full-width banner image */}
-      <div className="banner">
+      {/* <div className="banner">
         <img
           // src="https://media.istockphoto.com/id/1124687034/photo/man-on-wheelchair-taking-photos-of-beautiful-landscape-in-a-foggy-morning-st-thomas-slovenia.jpg?s=1024x1024&w=is&k=20&c=e0uuTVFb3TLlt02m2EAm_1LuRw8gyMBsPk9FF24JZDk="
           src="https://store.sony.com.au/on/demandware.static/-/Library-Sites-sony-shared-library/default/dwb1bfa1fa/content/category/cameras/camera-category-banner.jpg"
           alt="Banner"
           className="banner-image"
         />
-      </div>
+      </div> */}
+      
+      <ImageSlider/>
 
       <div className="exciting-message">
         <h2>Welcome to the World of Photography by Ravi Gore!</h2>
