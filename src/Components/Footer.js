@@ -75,8 +75,8 @@ export const Footer = () => {
         <div className="footer-section" style={{ paddingLeft: '3%', paddingRight: '3%' }}>
           <h3>Get in Touch</h3>
           <p>Email: <a href="mailto:contact@yourphotography.com">your-contact@email.com</a></p>
-          <p>Phone: <a href="tel:+1234567890">+1 234 567 890</a></p>
-          <p>Location: New York, NY</p>
+          <p>Phone: <a href="tel:+1234567890">+91 7774709201</a></p>
+          <p>Location: Yavatmal, Maharashtra</p>
         </div>
 
         {/* Social Media Links */}
