@@ -1,0 +1,108 @@
+.home-page-card {
+  width: 100%;
+  max-width: 98%;
+  /* max-width: 100%; */
+  height: 500px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1);
+  margin-bottom: 5vh;
+  /* margin-left: 3vh; */
+  margin-right: 5vh;
+}
+
+.home-page-card:hover {
+  transform: scale(1.05);
+}
+
+.home-page-card-image-wrapper {
+  width: 100%;
+  height: 60%;
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+}
+
+.home-page-card-image-stack {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.home-page-card-info {
+  font-weight: 475;
+  padding-left: 10px;
+  padding-top: 15px;
+}
+
+.home-page-card-location-name {}
+
+.home-page-card-button-wrapper {
+  margin-top: 25px;
+  display: flex;
+  justify-content: space-around;
+}
+
+.home-page-card-btn {
+  border: none;
+  padding: 12px 32px;
+  border-radius: 24px;
+  font-size: 12px;
+  font-size: 0.8rem;
+  letter-spacing: 2px;
+  cursor: pointer;
+}
+
+.home-page-card-btn+.home-page-card-btn {
+  margin-left: 10px;
+}
+
+.home-page-card-btn-outline {
+  background: transparent;
+  color: #2196f3;
+  border: 1px solid #2196f3;
+  transition: all .3s ease;
+}
+
+.home-page-card-btn-outline:hover {
+  transform: scale(1.125);
+  /* color: rgba(255, 255, 255, 0.9);
+  border-color: rgba(255, 255, 255, 0.9); */
+}
+
+
+.home-page-card-btn-fill {
+  background: #2196f3;
+  color: rgba(255, 255, 255, 0.95);
+  font-weight: bold;
+  transition: all .3s ease;
+}
+
+.home-page-card-btn-fill:hover {
+  transform: scale(1.125);
+  border-color: rgba(255, 255, 255, 0.9);
+  filter: drop-shadow(0 10px 5px rgba(0, 0, 0, 0.125));
+}
+
+@media (max-width: 600px) {
+  .home-page-card-btn {
+    border: none;
+    padding: 8px 12px;
+    border-radius: 18px;
+    font-size: 0.7rem;
+    letter-spacing: 1px;
+    cursor: pointer;
+  }
+
+  .home-page-card-btn-outline {
+    background: #2196f3;
+    color: rgba(255, 255, 255, 0.95);
+    font-weight: bold;
+    transition: all .3s ease;
+  }
+
+  .home-page-card-btn-outline:hover {
+    transform: scale(1.125);
+    border-color: rgba(255, 255, 255, 0.9);
+    filter: drop-shadow(0 10px 5px rgba(0, 0, 0, 0.125));
+  }
+}

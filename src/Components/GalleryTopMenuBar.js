@@ -13,6 +13,10 @@ const GalleryTopMenuBar = ({
 }) => {
     const navigate = useNavigate();
 
+    // Extract customer names from galleryAssets[0]
+    const customerNames =
+        galleryAssets?.[0]?.customerName?.split(',').slice(0, 2) || ['Dummy1', 'Dummy2'];
+
     const handleSelectAll = () => {
         setIsSelected(!isSelected);
         if (!isSelected) {
@@ -24,52 +28,72 @@ const GalleryTopMenuBar = ({
 
     return (
         <div
-        style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            backgroundColor: '#f5f5f5',
-            width: '98.5%',
-            margin: '20px auto',
-            border: '1px solid #ccc',
-            // boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1)',
-            borderRadius: '8px',
-            padding: '15px 10px',
-            marginBottom: '20px',
-        }}
-    >
+            style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                backgroundColor: '#f5f5f5',
+                width: '98.5%',
+                margin: '20px auto',
+                border: '1px solid #ccc',
+                borderRadius: '8px',
+                padding: '15px 10px',
+                marginBottom: '20px',
+            }}
+        >
+            <div
+                style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '15px',
+                    marginLeft: '10px',
+                }}
+            >
+                <Tooltip title="Go Back">
+                    <ArrowBackIosNewIcon
+                        style={{
+                            cursor: 'pointer',
+                            fontSize: '30px',
+                            marginRight: '10px',
+                        }}
+                        onClick={() => navigate('/')}
+                    />
+                </Tooltip>
+            </div>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: '15px', marginLeft: '10px' }}>
-            <Tooltip title="Go Back">
-                <ArrowBackIosNewIcon
-                    style={{
-                        cursor: 'pointer',
-                        fontSize: '30px',
-                        marginRight: '10px',
-                    }}
-                    onClick={() => navigate('/')}
-                />
-            </Tooltip>
-        </div>
+            <div
+                style={{
+                    display: 'flex',
+                    flex: 1,
+                    justifyContent: 'center',
+                    fontWeight: 'bold',
+                    fontSize: '22px',
+                }}
+            >
+                <span style={{ marginRight: '10px' }}>{customerNames[0]}</span> &
+                <span style={{ marginLeft: '10px' }}>{customerNames[1]}</span>
+            </div>
 
-        <div style={{ display: 'flex', flex: 1, justifyContent: 'center', fontWeight: 'bold', fontSize:'22px' }}>
-            <span style={{ marginRight: '10px' }}>Rajshree Burnure</span> &
-            <span style={{ marginLeft: '10px' }}>Omprakash Burnure</span>
+            <div
+                style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '15px',
+                    marginRight: '10px',
+                }}
+            >
+                <Tooltip title="Select All">
+                    <DoneAllIcon
+                        style={{
+                            cursor: 'pointer',
+                            fontSize: '30px',
+                            color: isSelected ? 'green' : 'inherit', // Change color on click
+                        }}
+                        onClick={handleSelectAll}
+                    />
+                </Tooltip>
+            </div>
         </div>
-
-        <div style={{ display: 'flex', alignItems: 'center', gap: '15px', marginRight: '10px' }}>
-            <Tooltip title="Select All">
-                <DoneAllIcon
-                    style={{
-                        cursor: 'pointer',
-                        fontSize: '30px',
-                        color: isSelected ? 'green' : 'inherit', // Change color on click
-                    }}
-                    onClick={handleSelectAll}
-                />
-            </Tooltip>
-        </div>
-    </div>
     );
 };
 

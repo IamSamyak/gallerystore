@@ -56,101 +56,36 @@
 /* } */
 
 
-.card-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  padding: 20px;
-  justify-content: space-evenly;
+.home-page-card-container {
+  -webkit-column-count: 3;
+  -moz-column-count: 3;
+  column-count: 3;
+  -webkit-column-width: 33%;
+  -moz-column-width: 33%;
+  column-width: 33%;
+  padding: 0 12px;
+  margin-top: 3vh;
 }
 
-.card:hover {
-  transform: scale(1.05);
+@media (max-width: 991px) {
+  .home-page-card-container {
+    -webkit-column-count: 2;
+    -moz-column-count: 2;
+    column-count: 2;
+  }
 }
 
-.image-wrapper {
-  width: 100%;
-  height: 60%;
-  border-radius: 10px;
-  overflow: hidden;
-  position: relative;
+@media (max-width: 480px) {
+  .home-page-card-container {
+    -webkit-column-count: 1;
+    -moz-column-count: 1;
+    column-count: 1;
+    -webkit-column-width: 100%;
+    -moz-column-width: 100%;
+    column-width: 100%;
+  }
 }
 
-.image-stack {
-  position: relative;
-  width: 100%;
-  height: 100%;
-}
-
-.stacked-image {
-  position: absolute;
-  top: 0;
-  height: 100%;
-  width: 100%;
-  transition: all 0.3s ease;
-  object-fit: cover; /* Ensure the image covers the space */
-}
-
-.card-info {
-  font-weight: 475;
-  padding-left: 10px;
-  padding-top: 15px;
-}
-
-.button-wrapper {
-  margin-top: 25px;
-  display: flex;
-  justify-content: space-around;
-}
-
-.btn {
-  border: none;
-  padding: 12px 24px;
-  border-radius: 24px;
-  font-size: 12px;
-  font-size: 0.8rem;
-  letter-spacing: 2px;
-  cursor: pointer;
-}
-
-.btn + .btn {
-  margin-left: 10px;
-}
-
-.outline {
-  background: transparent;
-  color: #2196f3;
-  border: 1px solid #2196f3;
-  transition: all .3s ease;
-}
-
-.outline:hover {
-  transform: scale(1.125);
-  /* color: rgba(255, 255, 255, 0.9);
-  border-color: rgba(255, 255, 255, 0.9); */
-}
-
-.fill {
-  background: #2196f3;
-  color: rgba(255, 255, 255, 0.95);
-  font-weight: bold;
-  transition: all .3s ease;
-}
-
-.fill:hover {
-  transform: scale(1.125);
-  border-color: rgba(255, 255, 255, 0.9);
-  filter: drop-shadow(0 10px 5px rgba(0, 0, 0, 0.125));
-}
-
-
-.card {
-  width: 100%;
-  max-width: 32%;
-  height: 500px;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1);
-}
 
 /* .card {
   -webkit-column-count: 3;
@@ -161,17 +96,6 @@
   column-width: 33%;
   padding: 0 12px;
 } */
-
-.gallery .pics {
-  -webkit-transition: all 350ms ease;
-  transition: all 350ms ease;
-  cursor: pointer;
-  margin-bottom: 12px;
-}
-
-.gallery .pics:hover {
-  filter: opacity(0.8);
-}
 
 .modal {
   width: 100%;

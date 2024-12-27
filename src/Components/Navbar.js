@@ -2,13 +2,16 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import CompanyLogo from '../Assets/image-gallery.png';
 import NavbarLogo from '../Assets/NavbarLogo.png';
+import MenuIcon from '@mui/icons-material/Menu'; // Import Menu icon from MUI
 import './Navbar.css';
 
 function Navbar() {
-  const navigate = useNavigate(); // Use navigate from react-router-dom
-  const location = useLocation(); // Get the current location (route)
+  const navigate = useNavigate();
+  const location = useLocation();
   const [selectedLink, setSelectedLink] = useState("Home");
   const [isAdminLoggedIn, setIsAdminLoggedIn] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 900); // Check initial screen size
+  const [showMenu, setShowMenu] = useState(false); // Menu visibility state
 
   useEffect(() => {
     // Check if 'isAdminLoggedIn' exists in sessionStorage
@@ -16,6 +19,17 @@ function Navbar() {
     if (adminStatus === 'true') {
       setIsAdminLoggedIn(true); // Set state based on sessionStorage
     }
+
+    // Update the screen size state on window resize
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 900);
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
   }, []);
 
   useEffect(() => {
@@ -33,85 +47,132 @@ function Navbar() {
     } else if (location.pathname === '/logout') {
       setSelectedLink('Logout');
     }
-  }, [location]); // Run this effect whenever the route changes
+  }, [location]);
 
   const handleNavigation = (link) => {
-    // setSelectedLink(link); // This will update the selectedLink state
     if (link === 'Home') {
-      navigate('/'); // Navigate to Home page
+      navigate('/');
     } else if (link === 'Pricing') {
-      navigate('/pricing'); // Navigate to Pricing page
+      navigate('/pricing');
     } else if (link === 'Upload Assets' && isAdminLoggedIn) {
-      navigate('/upload-assets'); // Navigate to Upload Assets page (for admin)
+      navigate('/upload-assets');
     } else if (link === 'Cart' && !isAdminLoggedIn) {
-      navigate('/shopping-cart'); // Navigate to Shopping Cart page (for normal users)
+      navigate('/shopping-cart');
     } else if (link === 'Contact Us' && !isAdminLoggedIn) {
-      navigate('/contact-us'); // Navigate to Shopping Cart page (for normal users)
+      navigate('/contact-us');
+    } else if (link === 'Logout') {
+      sessionStorage.removeItem('isAdminLoggedIn');
+      setIsAdminLoggedIn(false);
+      navigate('/');
     }
-    else if (link === 'Logout') {
-      sessionStorage.removeItem('isAdminLoggedIn'); // Remove admin login status from sessionStorage
-      setIsAdminLoggedIn(false); // Update state to reflect that the user is logged out
-      navigate('/'); // Redirect to the homepage or login page after logout
-    }
+    setShowMenu(false); // Close the menu after navigation
   };
 
   return (
     <div className='navbar-wrapper'>
       <div className='admin-info'>
-        <div className="profile-name" >         
+        <div className="logo-container" >         
           <img src={NavbarLogo} alt="Logo" className="logo-image" />
         </div>
       </div>
-      <div className='navbar_container'>
-        <ul>
-          <li
-            className={selectedLink === 'Home' ? 'selected' : ''}
-            onClick={() => handleNavigation('Home')}
-          >
-            Home
-          </li>
-          <li
-            className={selectedLink === 'Pricing' ? 'selected' : ''}
-            onClick={() => handleNavigation('Pricing')}
-          >
-            Pricing
-          </li>
-
-          {/* Conditionally render 'Contact Us' or 'Upload Assets' */}
-          {isAdminLoggedIn ? (
-            <li
-              className={selectedLink === 'Upload Assets' ? 'selected' : ''}
-              onClick={() => handleNavigation('Upload Assets')}
-            >
-              Upload Assets
-            </li>
-          ) : (
-            <li
-              className={selectedLink === 'Contact Us' ? 'selected' : ''}
-              onClick={() => handleNavigation('Contact Us')}
-            >
-              Contact Us
-            </li>
+      {isMobile ? (
+        <div className='navbar-container'>
+          <MenuIcon className="menu-icon" onClick={() => setShowMenu(!showMenu)} />
+          {showMenu && (
+            <ul className="mobile-menu">
+              <li
+                className={selectedLink === 'Home' ? 'selected' : ''}
+                onClick={() => handleNavigation('Home')}
+              >
+                Home
+              </li>
+              <li
+                className={selectedLink === 'Pricing' ? 'selected' : ''}
+                onClick={() => handleNavigation('Pricing')}
+              >
+                Pricing
+              </li>
+              {isAdminLoggedIn ? (
+                <li
+                  className={selectedLink === 'Upload Assets' ? 'selected' : ''}
+                  onClick={() => handleNavigation('Upload Assets')}
+                >
+                  Upload Assets
+                </li>
+              ) : (
+                <li
+                  className={selectedLink === 'Contact Us' ? 'selected' : ''}
+                  onClick={() => handleNavigation('Contact Us')}
+                >
+                  Contact Us
+                </li>
+              )}
+              {!isAdminLoggedIn ? (
+                <li
+                  className={selectedLink === 'Cart' ? 'selected' : ''}
+                  onClick={() => handleNavigation('Cart')}
+                >
+                  Cart
+                </li>
+              ) : (
+                <li
+                  className={selectedLink === 'Logout' ? 'selected' : ''}
+                  onClick={() => handleNavigation('Logout')}
+                >
+                  Logout
+                </li>
+              )}
+            </ul>
           )}
-
-          {/* Conditionally render Cart or Logout */}
-          {!isAdminLoggedIn ? (
+        </div>
+      ) : (
+        <div className='navbar-container'>
+          <ul>
             <li
-              className={selectedLink === 'Cart' ? 'selected' : ''}
-              onClick={() => handleNavigation('Cart')}
+              className={selectedLink === 'Home' ? 'selected' : ''}
+              onClick={() => handleNavigation('Home')}
             >
-              Cart
+              Home
             </li>
-          ) : (
             <li
-              className={selectedLink === 'Logout' ? 'selected' : ''}
-              onClick={() => handleNavigation('Logout')}
+              className={selectedLink === 'Pricing' ? 'selected' : ''}
+              onClick={() => handleNavigation('Pricing')}
             >
-              Logout
+              Pricing
             </li>
-          )}
-        </ul>
-      </div>
+            {isAdminLoggedIn ? (
+              <li
+                className={selectedLink === 'Upload Assets' ? 'selected' : ''}
+                onClick={() => handleNavigation('Upload Assets')}
+              >
+                Upload Assets
+              </li>
+            ) : (
+              <li
+                className={selectedLink === 'Contact Us' ? 'selected' : ''}
+                onClick={() => handleNavigation('Contact Us')}
+              >
+                Contact Us
+              </li>
+            )}
+            {!isAdminLoggedIn ? (
+              <li
+                className={selectedLink === 'Cart' ? 'selected' : ''}
+                onClick={() => handleNavigation('Cart')}
+              >
+                Cart
+              </li>
+            ) : (
+              <li
+                className={selectedLink === 'Logout' ? 'selected' : ''}
+                onClick={() => handleNavigation('Logout')}
+              >
+                Logout
+              </li>
+            )}
+          </ul>
+        </div>
+      )}
     </div>
   );
 }

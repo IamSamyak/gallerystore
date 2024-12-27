@@ -16,31 +16,26 @@
 }
 
 .cart-items-container {
-  max-height: 400px; /* Limit height for scrolling */
-  overflow-y: auto;
-  padding-right: 10px; /* Space for scrollbar */
+  max-height: 400px;
+  padding-right: 10px;
   position: relative;
 }
 
 .cart-items-table {
   width: 100%;
   border-collapse: collapse;
-  /* border-top: 2px solid #ccc; */
 }
 
 .cart-items-table th,
 .cart-items-table td {
   padding: 15px;
   text-align: left;
-  border-top: 1px solid #ccc; /* Only top border for rows */
+  border-top: 1px solid #ccc;
 }
 
 .cart-items-table th {
   background-color: #f4f4f4;
   font-weight: bold;
-  /* position: sticky;  for table scroll with sticky header
-  top: 0; 
-  z-index: 1;  */
 }
 
 .even-row {
@@ -94,9 +89,7 @@
 .checkout-button {
   background-color: #108ff6;
   color: white;
-  /* border: none; */
   border-radius: 10px;
-  /* padding: 10px 30px; */
   padding: 10px;
   width: 100%;
   cursor: pointer;
@@ -125,13 +118,226 @@
 }
 
 .media-type {
-  display: inline-flex; /* Ensures text and icon stay in one line */
-  align-items: center; /* Vertically aligns the icon with text */
-  gap: 5px; /* Adds spacing between the text and the icon */
-  justify-content: center; /* Centers the content in the cell */
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  justify-content: center;
 }
 
 td {
-  text-align: center; /* Ensures all table data cells are centered */
-  vertical-align: middle; /* Aligns content vertically in the middle */
+  text-align: center;
+  vertical-align: middle;
+}
+
+/* Pagination styles */
+.pagination-container {
+  margin-top: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.pagination-button {
+  background-color: #f4f4f4;
+  border: none;
+  border-radius: 5px;
+  padding: 8px 12px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  transition: background-color 0.2s ease;
+}
+
+.pagination-button:hover {
+  background-color: #ddd;
+}
+
+/* Update the Next and Previous buttons with the new background color */
+.pagination-button:disabled {
+  background-color: #e0e0e0;
+  cursor: not-allowed;
+}
+
+.pagination-button.previous,
+.pagination-button.next {
+  background-color: #2196f3;
+  color: white;
+}
+
+.pagination-button.previous:hover,
+.pagination-button.next:hover {
+  background-color: #1976d2; /* Darker shade for hover effect */
+}
+
+/* Style for active page number */
+.pagination-number button {
+  background-color: transparent;
+  border: none;
+  font-size: 14px;
+  cursor: pointer;
+  padding: 5px 8px;
+}
+
+.active-page-number {
+  font-weight: bold;
+  text-decoration: underline;
+  color: white; /* White text color for the active page number */
+  background-color: #2196f3; /* Highlight the active page number with blue */
+  padding: 8px 12px; /* Add some padding to make it more prominent */
+}
+
+.active:hover{
+  color: white; /* White text color for the active page number */
+  background-color: #2196f3; /* Highlight the active page number with blue */
+}
+
+.empty-cart-message {
+  text-align: center;
+  margin-top: 50px;
+}
+
+.empty-cart-message h3 {
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.empty-cart-message p {
+  font-size: 16px;
+  margin-top: 10px;
+}
+
+.shop-button {
+  background-color: #108ff6;
+  color: white;
+  border-radius: 10px;
+  padding: 10px 20px;
+  font-size: 16px;
+  margin-top: 20px;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.modal-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  position: relative;
+  width: 500px; /* Fixed width */
+  height: 500px; /* Fixed height */
+  background-color: white;
+  border: 3px solid #475569; /* Box border around content */
+  border-radius: 10px;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.modal-image {
+  width: 100%; /* Fixed width of the image */
+  height: 100%; /* Fixed height of the image */
+  object-fit: cover; /* Cover the area without distorting the image */
+  border-radius: 10px;
+}
+
+.close-icon-modal {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  color: #fff;
+  background-color: rgba(0, 0, 0, 0.6);
+  cursor: pointer;
+  font-size: 24px;
+  z-index: 1010;
+  border-radius: 7px;
+}
+
+.delete-icon-modal {
+  position: absolute;
+  top: 6px;
+  right: 40px;
+  color: rgb(240, 120, 120);
+  background-color: rgba(0, 0, 0, 0.6);
+  cursor: pointer;
+  font-size: 24px;
+  z-index: 1010;
+  border-radius: 7px;
+}
+
+.modal-nav-arrow-left, .modal-nav-arrow-right {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #fff;
+  cursor: pointer;
+  font-size: 30px;
+  height: 4rem;
+  width: 2rem;
+  background-color: rgba(0, 0, 0, 0.6);
+  border: none;
+  border-radius: 7px;
+  /* padding: 10px; */
+  z-index: 1005;
+}
+
+.modal-nav-arrow-left {
+  left: 2px;
+}
+
+.modal-nav-arrow-right {
+  right: 2px;
+}
+
+.modal-nav-arrow-left:hover,
+.modal-nav-arrow-right:hover {
+  background-color: rgba(0, 0, 0, 0.8); /* Darker background on hover */
+}
+
+.modal-nav-arrow-left:focus,
+.modal-nav-arrow-right:focus {
+  outline: none;
+}
+
+@media (max-width: 700px) {
+  .order-card{
+    padding-bottom: 60px;
+    padding-right: 30px;
+    padding-left: 30px;
+  }
+
+  .shopping-cart-container {
+    flex-direction: column;
+    align-items: center;
+    padding: 50px 20px;
+  }
+
+  .pagination {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 5px;
+  }
+
+  .pagination-container {
+    margin-top: 0;
+    width: 100%; 
+    display: flex;
+    justify-content: center; 
+  }
+
+  .pagination-button {
+    padding: 8px 15px;
+    font-size: 14px;
+  }
 }

@@ -10,6 +10,7 @@ import GalleryTopMenuBar from '../Components/GalleryTopMenuBar';
 import GalleryModalMenuOptions from '../Components/GalleryModalMenuOptions';
 import VideoCard from '../Components/VideoCard';
 import CompanyLogo from '../Assets/image-gallery.png';
+import WaterMark from '../Components/WaterMark';
 
 function Gallery({ addToCart, isAdminLoggedIn }) {
     const { galleryGroupId } = useParams();
@@ -154,31 +155,7 @@ function Gallery({ addToCart, isAdminLoggedIn }) {
             <div className={modal ? "modal open" : "modal"}>
                 <div style={{ position: 'relative', display: 'inline-block' }}>
                     <img src={galleryAssets[modalIndex]?.imageUrl} style={{ width: '100%' }} alt="modal" />
-                    <div
-                        style={{
-                            position: 'absolute',
-                            top: '50%',
-                            left: '50%',
-                            transform: 'translate(-50%, -50%)',
-                            color: 'rgba(255, 255, 255, 0.6)',
-                            fontSize: '24px',
-                            fontWeight: 'bold',
-                            pointerEvents: 'none',
-                            userSelect: 'none',
-                        }}
-                    >
-                        <div className="profile-name" style={{ fontSize: '22px', width: '100%' }}>
-                            SHREE DIGITAL
-                            <img
-                                src={CompanyLogo}
-                                height={40}
-                                width={40}
-                                style={{ backgroundColor: 'transparent', filter: 'invert(100%)', height: '10%', width: '10%' }}
-                                alt="Shree Digital Photo Logo"
-                                className="logo-image"
-                            />
-                            PHOTO</div>
-                    </div>
+                    <WaterMark height='80px' fontSize='22px'/>
                 </div>
 
                 <GalleryModalMenuOptions

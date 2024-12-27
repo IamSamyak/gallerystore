@@ -1,66 +1,106 @@
-import React, { useEffect, useState } from 'react';
-import './ImageSlider.css';
+import React, { useState, useEffect } from 'react';
 
 const ImageSlider = () => {
   const images = [
     'https://plus.unsplash.com/premium_photo-1734275012690-6d3006fba036?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwzfHx8ZW58MHx8fHx8',
     'https://images.unsplash.com/photo-1734452465230-f571caa4d7d5?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwyN3x8fGVufDB8fHx8fA%3D%3D',
-    'https://images.unsplash.com/photo-1730577836014-0689bfc83670?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHw5fHx8ZW58MHx8fHx8'
+    'https://images.unsplash.com/photo-1730577836014-0689bfc83670?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHw5fHx8ZW58MHx8fHx8',
   ];
-
-  const [currentIndex, setCurrentIndex] = useState(0); // Start at the second image (index 1)
-  const totalSlides = images.length;
-  const slides = [...images]; // Duplicate first and last slides for seamless loop
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
-    console.log('happening');
-    
-    const interval = setInterval(() => {     
-      // console.log('happening',currentIndex);
-      goToNextSlide();
-      
-    }, 5000); 
-    // return () => clearInterval(interval); 
-  }, []);
+    const interval = setInterval(() => {
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
+    }, 3000); // Change slides every 3 seconds
+    return () => clearInterval(interval); // Cleanup on component unmount
+  }, [images.length]);
 
-  const goToNextSlide = () => {
-    console.log('currentIndex is ',currentIndex); 
-    setCurrentIndex((prevIndex)=> (prevIndex+1)%totalSlides);
-  };
-
-  const goToPrevSlide = () => {
-    setCurrentIndex((prevIndex) => {
-      // Move to the previous slide and reset to the last real image if it reaches the duplicate
-      if (prevIndex === 0) return slides.length - 2; // Skip to the last real image
-      return prevIndex - 1;
-    });
-  };
-
-  const goToSlide = (index) => {
-    console.log('currentIndex is ',currentIndex); 
-    setCurrentIndex(index); 
+  const handleDotClick = (index) => {
+    setCurrentIndex(index);
   };
 
   return (
-    <div className="image-slider">
-      <div className="image-slider__slides">
-        {/* {slides.map((image, index) => ( */}
-          <div className="image-slider__slide">
-            <img src={images[currentIndex]} alt={`Slide ${0 + 1}`} />
-          </div>
-        {/* ))} */}
+    <div style={styles.sliderContainer}>
+      <div style={styles.imageContainer}>
+        <img
+          src={images[currentIndex]}
+          alt={`Slide ${currentIndex}`}
+          style={styles.image}
+        />
+        <div style={styles.overlayDots}>
+          {images.map((_, index) => (
+            <div
+              key={index}
+              style={{
+                ...styles.overlayDot,
+                backgroundColor: currentIndex === index ? 'white' : 'rgba(255, 255, 255, 0.5)',
+              }}
+              onClick={() => handleDotClick(index)}
+            ></div>
+          ))}
+        </div>
       </div>
-      <div className="image-slider__dots">
+      <div style={styles.navigationDots}>
         {images.map((_, index) => (
-          <div
+          <span
             key={index}
-            className={`image-slider__dot ${currentIndex === index ? 'image-slider__dot--active' : ''}`}
-            onClick={() => goToSlide(index)} 
-          ></div>
+            style={{
+              ...styles.dot,
+              backgroundColor: currentIndex === index ? 'black' : 'lightgray',
+            }}
+            onClick={() => handleDotClick(index)}
+          ></span>
         ))}
       </div>
     </div>
   );
+};
+
+const styles = {
+  sliderContainer: {
+    position: 'relative',
+    width: '100%',
+    height: '600px', // Fixed height
+    overflow: 'hidden',
+    borderRadius: '15px',
+  },
+  imageContainer: {
+    position: 'relative',
+    height: '100%', // Ensure it takes the full height of the container
+  },
+  image: {
+    width: '100%',
+    height: '100%', // Ensures the image fills the container
+    objectFit: 'cover', // Maintains aspect ratio and crops overflow
+    borderRadius: '15px',
+  },
+  overlayDots: {
+    position: 'absolute',
+    bottom: '4%',
+    left: '50%',
+    transform: 'translateX(-50%)',
+    display: 'flex',
+    gap: '10px',
+  },
+  overlayDot: {
+    width: '10px',
+    height: '10px',
+    borderRadius: '50%',
+    cursor: 'pointer',
+  },
+  navigationDots: {
+    display: 'flex',
+    justifyContent: 'center',
+    marginTop: '10px',
+  },
+  dot: {
+    width: '15px',
+    height: '15px',
+    borderRadius: '50%',
+    margin: '0 5px',
+    cursor: 'pointer',
+    backgroundColor: 'lightgray'
+  },
 };
 
 export default ImageSlider;
