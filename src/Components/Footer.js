@@ -1,14 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import './Footer.css';
-import COMPANY_LOGO from '../Assets/SHREE_DIGITAL_PHOTO_NO_BACKGROUND.png'
 
-export const Footer = () => {
-  const phrases = [
+export const Footer = ({isDarkMode}) => {
+  const phrases = useMemo(() => [
     'Timeless moments.',
     'Captured perfection.',
     'Endless memories.',
     'Story in frames.'
-  ];
+  ], []);
 
   const [typedText, setTypedText] = useState('');
   const [currentPhraseIndex, setCurrentPhraseIndex] = useState(0);
@@ -35,7 +34,6 @@ export const Footer = () => {
             setCharIndex(0); // Reset character index
             setIsTyping(true); // Start typing next phrase
 
-            // Move to the next phrase in a circular fashion
             setCurrentPhraseIndex((prevIndex) => (prevIndex + 1) % phrases.length);
           }, pauseDuration);
         }
@@ -51,7 +49,7 @@ export const Footer = () => {
   }, [isTyping, charIndex, currentPhraseIndex, phrases, typingSpeed, pauseDuration]);
 
   return (
-    <footer className="footer">
+    <footer className="footer" style={{ backgroundColor: isDarkMode ? '#0D0D0D' : '#2d2d2d' }}>
       <div className="footer-container">
         {/* Logo and About Section */}
         {/* <div className="logo-container" style={{marginLeft:'2vw',marginTop:'10px'}}>

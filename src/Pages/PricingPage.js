@@ -6,9 +6,9 @@ const plans = [
     title: 'Silver',
     price: '₹5,000',
     features: ['Basic Photography',
-       'Photo Editing', 
-       'Online Album Access',
-       'Online Album Access',
+      'Photo Editing',
+      'Online Album Access',
+      'Online Album Access',
     ],
   },
   {
@@ -43,7 +43,7 @@ const plans = [
   },
 ];
 
-const PricingPage = () => {
+const PricingPage = ({isDarkMode}) => {
   const icons = [
     'fas fa-gem',
     'fas fa-crown',
@@ -53,27 +53,30 @@ const PricingPage = () => {
 
   return (
     <div className="card-container-shopping-page">
-  {plans.map((plan, index) => (
-    <div className="card-wrap" key={index}>
-      <div className={`card-header ${['one', 'two', 'three', 'four'][index % 4]}`}>
-        <i className={icons[index % icons.length]}></i>
-      </div>
-      <div className="card-content">
-        <h1 className="card-title">{plan.title}</h1>
-        <p className="card-price">{plan.price}</p>
-        <div className="card-features">
-          {plan.features.map((feature, i) => (
-            <div key={i}>{feature}</div>
-          ))}
+      {plans.map((plan, index) => (
+        <div
+          className={`card-wrap-pricing-page ${isDarkMode ? 'card-wrap-pricing-page-dark-mode' : ''}`}
+          key={index}
+        >
+          <div className={`card-header ${['one', 'two', 'three', 'four'][index % 4]}`}>
+            <i className={icons[index % icons.length]}></i>
+          </div>
+          <div className="card-content">
+            <h1 className="card-title">{plan.title}</h1>
+            <p className="card-price">{plan.price}</p>
+            <div className="card-features">
+              {plan.features.map((feature, i) => (
+                <div key={i}>{feature}</div>
+              ))}
+            </div>
+            <button className={`card-btn ${['one', 'two', 'three', 'four'][index % 4]}`}>
+              Choose
+              {/* {plan.title} */}
+            </button>
+          </div>
         </div>
-        <button className={`card-btn ${['one', 'two', 'three', 'four'][index % 4]}`}>
-          Choose 
-          {/* {plan.title} */}
-        </button>
-      </div>
+      ))}
     </div>
-  ))}
-</div>
 
   );
 };

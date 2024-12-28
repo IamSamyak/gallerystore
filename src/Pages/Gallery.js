@@ -3,16 +3,14 @@ import axios from 'axios';
 import './Gallery.css';
 // import ArrowBackIcon from '../Assets/backwardicon.png'
 import config from '../config/config';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import Notification from '../Components/Notification';
 import GalleryCard from '../Components/GalleryCard';
 import GalleryTopMenuBar from '../Components/GalleryTopMenuBar';
 import GalleryModalMenuOptions from '../Components/GalleryModalMenuOptions';
-import VideoCard from '../Components/VideoCard';
-import CompanyLogo from '../Assets/image-gallery.png';
 import WaterMark from '../Components/WaterMark';
 
-function Gallery({ addToCart, isAdminLoggedIn }) {
+function Gallery({ addToCart, isAdminLoggedIn, isDarkMode }) {
     const { galleryGroupId } = useParams();
     const [galleryAssets, setGalleryAssets] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -146,6 +144,7 @@ function Gallery({ addToCart, isAdminLoggedIn }) {
                 galleryAssets={galleryAssets}
                 addToCart={addToCart}
                 setShowNotification={setShowNotification}
+                isDarkMode={isDarkMode}
             />
 
             {showNotification && (

@@ -9,10 +9,11 @@ import CloseIcon from '@mui/icons-material/Close';
 import "./ShoppingCartPage.css";
 import WaterMark from "../Components/WaterMark";
 import PaymentsIconsContainer from "./PaymentsIconsContainer";
+import EMPTY_SHOPPING_CART from '../Assets/EMPTY_SHOPPING_CART.png';
 
 const ITEMS_PER_PAGE = 4; // Number of items to display per page
 
-const ShoppingCartPage = ({ cartItems, handleDeleteCartItem }) => {
+const ShoppingCartPage = ({ cartItems, handleDeleteCartItem, isDarkMode }) => {
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
   const [modalOpen, setModalOpen] = useState(false);
@@ -32,13 +33,13 @@ const ShoppingCartPage = ({ cartItems, handleDeleteCartItem }) => {
     if (isVideo) {
       return (
         <span className="media-type">
-          Video <VideoFileIcon sx={{ color: "#475569" }} />
+          Video <VideoFileIcon sx={{ color: isDarkMode ? '#fff' : '#475569' }} />
         </span>
       );
     }
     return (
       <span className="media-type">
-        Image <PhotoIcon sx={{ color: "#475569" }} />
+        Image <PhotoIcon sx={{ color: isDarkMode ? '#fff' : '#475569' }} />
       </span>
     );
   };
@@ -145,7 +146,7 @@ const ShoppingCartPage = ({ cartItems, handleDeleteCartItem }) => {
 
   return (
     <div className="shopping-cart-container">
-      <div className="order-card">
+      <div className={`order-card ${isDarkMode ? "dark-mode" : ""}`}>
         <div
           style={{
             display: "flex",
@@ -161,14 +162,15 @@ const ShoppingCartPage = ({ cartItems, handleDeleteCartItem }) => {
         <div className="cart-items-container">
           {cartItems.length === 0 ? (
             <div className="empty-cart-message">
-              <h3>Your cart is empty.</h3>
-              <p>Browse our amazing photography collections and fill your cart with memories!</p>
-              <button onClick={() => navigate("/", { state: { focusOn: 'SearchBar' } })} className="shop-button">
-                Start Shopping
-              </button>
+                <img src={EMPTY_SHOPPING_CART} alt="Empty Cart" className="empty-cart-icon" style={{ width: '70%', height: '70%', display: 'block', margin: '0 auto', borderRadius:'20px' }} />
+                <h3>Your cart is empty.</h3>
+                <p>Browse our amazing photography collections and fill your cart with memories!</p>
+                <button onClick={() => navigate("/", { state: { focusOn: 'SearchBar' } })} className="shop-button">
+                  Start Shopping
+                </button>
             </div>
           ) : (
-            <table className="cart-items-table">
+            <table className={`cart-items-table ${isDarkMode ? 'dark-mode-table' : 'light-mode-table'}`}>
               <thead>
                 <tr>
                   <th>Item</th>
@@ -234,7 +236,7 @@ const ShoppingCartPage = ({ cartItems, handleDeleteCartItem }) => {
         </div>
       )}
 
-      <div className="order-summary-card">
+      <div className={`order-summary-card ${isDarkMode ? "dark-mode" : ""}`}>
         <h3>Order Summary</h3>
         <p className="total-price">
           <span style={{ fontWeight: "550" }}>Total</span>: ₹{calculateTotal()}
@@ -244,8 +246,8 @@ const ShoppingCartPage = ({ cartItems, handleDeleteCartItem }) => {
         </button>
 
         <div className="payment-methods">
-          <p style={{fontWeight:'600',fontSize:'17px'}}>We accept:</p>
-          <PaymentsIconsContainer/>
+          <p style={{ fontWeight: '600', fontSize: '17px' }}>We accept:</p>
+          <PaymentsIconsContainer />
         </div>
       </div>
     </div>

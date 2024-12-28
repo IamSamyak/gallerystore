@@ -16,6 +16,7 @@ import FileUpload from './Pages/TempAsset';
 
 function App() {
   const [cartItems, setCartItems] = useState([]);
+  const [isDarkMode, setIsDarkMode] = useState(false);
 
   const addToCart = (item) => {
     setCartItems((prevItems) => {
@@ -29,14 +30,19 @@ function App() {
     setCartItems(cartItems.filter((item) => item.id !== id));
   };
 
+  useEffect(() => {
+    // Change body background color based on isDarkMode
+    document.body.style.backgroundColor = isDarkMode ? '#0D0D0D' : 'white';
+  }, [isDarkMode]); // Run this effect whenever isDarkMode changes
+
   return (
     <Router>
-      <AppRoutes addToCart={addToCart} cartItems={cartItems} handleDeleteCartItem={handleDeleteCartItem} />
+      <AppRoutes addToCart={addToCart} cartItems={cartItems} handleDeleteCartItem={handleDeleteCartItem} isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode}/>
     </Router>
   );
 }
 
-function AppRoutes({ addToCart, cartItems, handleDeleteCartItem }) {
+function AppRoutes({ addToCart, cartItems, handleDeleteCartItem, isDarkMode }) {
   const location = useLocation();
   const [isAdminLoggedIn, setIsAdminLoggedIn] = useState(sessionStorage.getItem('isAdminLoggedIn')); 
   useEffect(() => {
@@ -53,15 +59,15 @@ function AppRoutes({ addToCart, cartItems, handleDeleteCartItem }) {
 
   return (
     <div>
-      {location.pathname !== '/admin-login' && location.pathname !== '/payment' && <Navbar />}
+      {location.pathname !== '/admin-login' && location.pathname !== '/payment' && <Navbar isDarkMode={isDarkMode}/>}
 
       <Routes>
-        <Route path="/" element={<Homepage addToCart={addToCart} />} />
-        <Route path="/pricing" element={<PricingPage />} />
+        <Route path="/" element={<Homepage isDarkMode={isDarkMode} addToCart={addToCart} />} />
+        <Route path="/pricing" element={<PricingPage isDarkMode={isDarkMode}/>} />
         <Route path="/file-upload" element={<FileUpload />} />
-        <Route path="/contact-us" element={<ContactUsPage />} />
+        <Route path="/contact-us" element={<ContactUsPage isDarkMode={isDarkMode}/>} />
         <Route path="/payment" element={<Payment />} />
-        <Route path="/gallery/:galleryGroupId" element={<Gallery addToCart={addToCart} isAdminLoggedIn={isAdminLoggedIn} />} />
+        <Route path="/gallery/:galleryGroupId" element={<Gallery addToCart={addToCart} isAdminLoggedIn={isAdminLoggedIn} isDarkMode={isDarkMode}/>} />
 
         {/* Protect the UploadAssets route using PrivateRoute */}
         <Route path="/upload-assets" element={<PrivateRoute><UploadAssets /></PrivateRoute>} />
@@ -69,11 +75,11 @@ function AppRoutes({ addToCart, cartItems, handleDeleteCartItem }) {
         <Route path="/admin-login" element={<AdminLogin setIsAdminLoggedIn={setIsAdminLoggedIn}/>} />
         <Route
           path="/shopping-cart"
-          element={<ShoppingCartPage cartItems={cartItems} handleDeleteCartItem={handleDeleteCartItem} />}
+          element={<ShoppingCartPage cartItems={cartItems} handleDeleteCartItem={handleDeleteCartItem} isDarkMode={isDarkMode}/>}
         />
       </Routes>
 
-      {location.pathname !== '/admin-login' && location.pathname !== '/payment' && <Footer />}
+      {location.pathname !== '/admin-login' && location.pathname !== '/payment' && <Footer isDarkMode={isDarkMode}/>}
     </div>
   );
 }

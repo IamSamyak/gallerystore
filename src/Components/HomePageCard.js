@@ -1,6 +1,5 @@
 import React from "react";
 import "./HomePageCard.css";
-import CompanyLogo from '../Assets/image-gallery.png';
 import WaterMark from "./WaterMark";
 
 const HomePageCard = ({
@@ -10,17 +9,18 @@ const HomePageCard = ({
   date,
   cost,
   onDetailsClick,
+  isDarkMode,
 }) => {
   return (
-    <div className="home-page-card">
+    <div className={`home-page-card ${isDarkMode ? 'dark-mode' : ''}`}>
       <div className="home-page-card-image-wrapper">
-        <div className="home-page-card-image-stack" style={{position:'relative'}}>
+        <div className="home-page-card-image-stack" style={{ position: 'relative' }}>
           <img
             src={imageUrl}
             alt="cover"
             className="home-page-card-image-stack"
           />
-         <WaterMark/>
+          <WaterMark />
         </div>
       </div>
       <div className="home-page-card-info">

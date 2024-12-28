@@ -7,7 +7,7 @@ import SearchBar from "../Components/SearchBar";
 import ImageSlider from "../Components/ImageSlider";
 import HomePageCard from "../Components/HomePageCard";
 
-const HomePage = () => {
+const HomePage = ({isDarkMode}) => {
   const [homePageAssets, setHomePageAssets] = useState([]);
   const navigate = useNavigate();
   const location = useLocation();
@@ -34,7 +34,6 @@ const HomePage = () => {
   useEffect(() => {
     if (location.state && location.state.focusOn) {
       const part = location.state.focusOn;
-      console.log('locations is ', location.state);
 
       if (part === 'SearchBar') {
         const handleScroll = () => {
@@ -74,8 +73,8 @@ const HomePage = () => {
         />
       </div> */}
       <div className="exciting-message">
-        <h2>Welcome to the World of Photography by Ravi Gore!</h2>
-        <p>
+        <h2 style={{ color: isDarkMode ? '#FFF' : '#333' }}>Welcome to the World of Photography by Ravi Gore!</h2>
+        <p style={{ color: isDarkMode ? '#CCC' : '#555' }}>
           "Capturing moments, telling stories, and freezing time with every click. Explore breathtaking landscapes, beautiful portraits, and much more through my lens. Join me on this visual journey to discover the art of photography in its purest form."
         </p>
       </div>
@@ -94,6 +93,7 @@ const HomePage = () => {
           date="25-09-2022"
           cost="₹ 20000"
           onDetailsClick={() => navigate(`/gallery/${filteredAsset.groupId}`)}
+          isDarkMode={isDarkMode}
         />
       ))}
     </div>

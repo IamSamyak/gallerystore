@@ -10,6 +10,7 @@ const GalleryTopMenuBar = ({
     galleryAssets,
     addToCart,
     setShowNotification,
+    isDarkMode
 }) => {
     const navigate = useNavigate();
 
@@ -32,10 +33,10 @@ const GalleryTopMenuBar = ({
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'space-between',
-                backgroundColor: '#f5f5f5',
+                backgroundColor: isDarkMode ? '#1e1e1e' : '#f5f5f5',
                 width: '98.5%',
                 margin: '20px auto',
-                border: '1px solid #ccc',
+                border: isDarkMode ? '1px solid rgba(255, 255, 255, 0.3)' : '1px solid #ccc',
                 borderRadius: '8px',
                 padding: '15px 10px',
                 marginBottom: '20px',
@@ -55,6 +56,7 @@ const GalleryTopMenuBar = ({
                             cursor: 'pointer',
                             fontSize: '30px',
                             marginRight: '10px',
+                            color: isDarkMode ? '#fff' : '#000'
                         }}
                         onClick={() => navigate('/')}
                     />
@@ -70,8 +72,8 @@ const GalleryTopMenuBar = ({
                     fontSize: '22px',
                 }}
             >
-                <span style={{ marginRight: '10px' }}>{customerNames[0]}</span> &
-                <span style={{ marginLeft: '10px' }}>{customerNames[1]}</span>
+                <span style={{ marginRight: '10px', color: isDarkMode ? '#fff' : '#000' }}>{customerNames[0]}</span> <span style={{color: isDarkMode ? '#fff' : '#000' }}> & </span> 
+                <span style={{ marginLeft: '10px', color: isDarkMode ? '#fff' : '#000' }}>{customerNames[1]}</span>
             </div>
 
             <div
@@ -87,7 +89,7 @@ const GalleryTopMenuBar = ({
                         style={{
                             cursor: 'pointer',
                             fontSize: '30px',
-                            color: isSelected ? 'green' : 'inherit', // Change color on click
+                            color: isSelected ? 'green' : (isDarkMode ? '#fff' : '#000')
                         }}
                         onClick={handleSelectAll}
                     />

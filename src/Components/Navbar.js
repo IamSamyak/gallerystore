@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import CompanyLogo from '../Assets/image-gallery.png';
-import NavbarLogo from '../Assets/NavbarLogo.png';
+import NavbarLogoLight from '../Assets/NavbarLogoLight.png';
+import NavbarLogoDark from '../Assets/NavbarLogoDark.png';
 import MenuIcon from '@mui/icons-material/Menu'; // Import Menu icon from MUI
 import './Navbar.css';
 
-function Navbar() {
+function Navbar({ isDarkMode }) {
   const navigate = useNavigate();
   const location = useLocation();
   const [selectedLink, setSelectedLink] = useState("Home");
@@ -69,15 +69,15 @@ function Navbar() {
   };
 
   return (
-    <div className='navbar-wrapper'>
+    <div className={"navbar-wrapper"}>
       <div className='admin-info'>
-        <div className="logo-container" >         
-          <img src={NavbarLogo} alt="Logo" className="logo-image" />
+        <div className="logo-container" >
+          <img src={isDarkMode ? NavbarLogoDark : NavbarLogoLight} alt="Logo" className="logo-image"/>
         </div>
       </div>
       {isMobile ? (
-        <div className='navbar-container'>
-          <MenuIcon className="menu-icon" onClick={() => setShowMenu(!showMenu)} />
+        <div className={`navbar-container ${isDarkMode ? 'navbar-dark-mode' : ''}`}>
+          <MenuIcon style={{ color: isDarkMode ? '#fff' : '#000' }} className="menu-icon" onClick={() => setShowMenu(!showMenu)} />
           {showMenu && (
             <ul className="mobile-menu">
               <li
@@ -126,7 +126,7 @@ function Navbar() {
           )}
         </div>
       ) : (
-        <div className='navbar-container'>
+        <div className={`navbar-container ${isDarkMode ? 'navbar-dark-mode' : ''}`}>
           <ul>
             <li
               className={selectedLink === 'Home' ? 'selected' : ''}

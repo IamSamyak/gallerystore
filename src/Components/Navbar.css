@@ -1,10 +1,22 @@
-@import url('https://fonts.cdnfonts.com/css/monster-clubhouse');
-
 .navbar-wrapper {
     display: flex;
     justify-content: flex-end;
     align-items: center;
     width: 100%;
+}
+
+.navbar-wrapper.light .navbar-container {
+    background-color: #ffffff;
+    /* Light mode navbar background */
+    color: #000000;
+    /* Light mode navbar text */
+}
+
+.navbar-wrapper.dark .navbar-container {
+    background-color: #1a1a1a;
+    /* Darker navbar for dark mode */
+    color: #e0e0e0;
+    /* Light gray text color */
 }
 
 .admin-info {
@@ -13,7 +25,8 @@
     justify-content: start;
     align-items: center;
     font-size: 2rem;
-    color: #4a4a4a;
+    color: #e0e0e0;
+    /* Light gray text */
     gap: 10px;
     font-weight: bold;
 }
@@ -28,22 +41,24 @@
 }
 
 .logo-container img {
-  max-width: 100%;
-  width: auto;
-  height: 120px; 
-  display: block;
-  object-fit: contain;
+    max-width: 100%;
+    width: auto;
+    height: 120px;
+    display: block;
+    object-fit: contain;
 }
 
+/* Navbar Container (Light and Dark Theme Adjustments) */
 .navbar-container {
     width: 55%;
     border-radius: 15px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1);
     padding: 0 20px;
     margin: 10px;
     display: flex;
     justify-content: center;
     position: relative;
+    background-color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1);
 }
 
 ul {
@@ -67,33 +82,46 @@ li.selected {
     border-bottom: 2px solid #2196f3;
 }
 
+.navbar-container.navbar-dark-mode {
+    /* border: 1px solid rgba(255, 255, 255, 0.3); */
+    background-color: #0D0D0D;
+    color: #fff;
+  }
+  
+/* Responsive Mobile Styles */
 @media (max-width: 900px) {
     .navbar-container {
         justify-content: flex-end;
-        box-shadow: none; /* Remove box-shadow for mobile view */
+        box-shadow: none;
     }
 
     .logo-container img {
-        height: 60px; 
-      }
+        height: 60px;
+    }
 
     .menu-icon {
         font-size: 2.5rem;
         cursor: pointer;
+        color: #000000;
+    }
+
+    .navbar-wrapper.dark .menu-icon {
+        color: #e0e0e0;
     }
 
     .mobile-menu {
         position: absolute;
-        top: calc(100% + 10px); /* Ensure the menu appears below the icon */
+        top: calc(100% + 10px);
+        /* Ensure the menu appears below the icon */
         right: 4%;
-        background-color: white;
+        background-color: #1a1a1a;
+        /* Dark mobile menu background */
         border-radius: 0 0 15px 15px;
         width: 30%;
         z-index: 1000;
         display: flex;
         flex-direction: column;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1);
-        border-radius: 1rem;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3), 0 6px 20px rgba(0, 0, 0, 0.3);
         justify-content: center;
         align-items: center;
         padding-left: 0;
@@ -102,8 +130,11 @@ li.selected {
     .mobile-menu li {
         padding: 10px 20px;
         text-align: center;
-        border-bottom: 1px solid #ddd;
+        border-bottom: 1px solid #444;
+        /* Darker border for contrast */
         font-size: 0.75rem;
+        color: #e0e0e0;
+        /* Light gray text for dark mode */
     }
 
     .mobile-menu li:last-child {
@@ -111,6 +142,13 @@ li.selected {
     }
 
     .mobile-menu li:hover {
-        background-color: #f0f0f0;
+        background-color: #333333;
+        /* Darker hover effect */
     }
+
+    .navbar-container.navbar-dark-mode {
+        border: none;
+        background-color: #0D0D0D;
+        color: #fff;
+      }
 }

@@ -3,7 +3,7 @@ import axios from 'axios';
 import "./ContactUsPage.css";
 import config from '../config/config';
 
-const ContactUsPage = () => {
+const ContactUsPage = ({ isDarkMode }) => {
   // State to manage form data
   const [formData, setFormData] = useState({
     fullName: "",
@@ -23,7 +23,7 @@ const ContactUsPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-  
+
     // Use the existing formData state directly
     axios.post(`${config.BASE_URL}/api/contact-us/send`, formData)
       .then((response) => {
@@ -35,13 +35,13 @@ const ContactUsPage = () => {
         alert('There was an error sending your message. Please try again.');
       });
   };
- 
+
 
   return (
-    <div className="contact_us_6 mycontainer">
+    <div className="contact_us_6">
       <div className="responsive-container-block container">
         <form className="form-box" onSubmit={handleSubmit}>
-          <div className="container-block form-wrapper">
+          <div className={`container-block form-wrapper ${isDarkMode ? 'contact-us-dark-mode' : ''}`}>
             <div className="mob-text">
               <p className="text-blk contactus-head">Get in Touch</p>
               <p className="text-blk contactus-subhead">
@@ -50,13 +50,10 @@ const ContactUsPage = () => {
               </p>
             </div>
             <div className="responsive-container-block" id="i2cbk">
-              <div
-                className="responsive-cell-block wk-tab-12 wk-mobile-12 wk-desk-12 wk-ipadp-12"
-                id="i10mt-3"
-              >
+              <div className="responsive-cell-block wk-tab-12 wk-mobile-12 wk-desk-12 wk-ipadp-12" id="i10mt-3">
                 <p className="text-blk input-title">FULL NAME</p>
                 <input
-                  className="input"
+                  className={`input ${isDarkMode ? 'contact-us-input-dark-mode input-dark-mode' : ''}`}
                   id="ijowk-3"
                   name="fullName"
                   placeholder="Please enter full name..."
@@ -64,13 +61,10 @@ const ContactUsPage = () => {
                   onChange={handleInputChange}
                 />
               </div>
-              <div
-                className="responsive-cell-block wk-tab-12 wk-mobile-12 wk-desk-12 wk-ipadp-12"
-                id="ip1yp"
-              >
+              <div className="responsive-cell-block wk-tab-12 wk-mobile-12 wk-desk-12 wk-ipadp-12" id="ip1yp">
                 <p className="text-blk input-title">EMAIL</p>
                 <input
-                  className="input"
+                  className={`input ${isDarkMode ? 'contact-us-input-dark-mode input-dark-mode' : ''}`}
                   id="ipmgh-3"
                   name="email"
                   placeholder="Please enter email..."
@@ -78,13 +72,10 @@ const ContactUsPage = () => {
                   onChange={handleInputChange}
                 />
               </div>
-              <div
-                className="responsive-cell-block wk-tab-12 wk-mobile-12 wk-desk-12 wk-ipadp-12"
-                id="ih9wi"
-              >
+              <div className="responsive-cell-block wk-tab-12 wk-mobile-12 wk-desk-12 wk-ipadp-12" id="ih9wi">
                 <p className="text-blk input-title">PHONE NUMBER</p>
                 <input
-                  className="input"
+                  className={`input ${isDarkMode ? 'contact-us-input-dark-mode input-dark-mode' : ''}`}
                   id="imgis-3"
                   name="phoneNumber"
                   placeholder="Please enter phone number..."
@@ -92,13 +83,10 @@ const ContactUsPage = () => {
                   onChange={handleInputChange}
                 />
               </div>
-              <div
-                className="responsive-cell-block wk-tab-12 wk-mobile-12 wk-desk-12 wk-ipadp-12"
-                id="i634i-3"
-              >
+              <div className="responsive-cell-block wk-tab-12 wk-mobile-12 wk-desk-12 wk-ipadp-12" id="i634i-3">
                 <p className="text-blk input-title">WHAT DO YOU HAVE IN MIND?</p>
                 <textarea
-                  className="textinput"
+                  className={`textinput ${isDarkMode ? 'contact-us-input-dark-mode textinput-dark-mode' : ''}`}
                   id="i5vyy-3"
                   name="query"
                   placeholder="Please enter query..."
@@ -120,7 +108,10 @@ const ContactUsPage = () => {
             <p className="text-blk map-contactus-head" id="w-c-s-fc_p-1-dm-id">
               Reach us at
             </p>
-            <p className="text-blk map-contactus-subhead">
+            <p
+              className="text-blk map-contactus-subhead"
+              style={isDarkMode ? { color: '#B0B0B0' } : {}}
+            >
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Felis
               diam lectus sapien.
             </p>
@@ -180,4 +171,3 @@ const ContactUsPage = () => {
 };
 
 export default ContactUsPage;
- 
