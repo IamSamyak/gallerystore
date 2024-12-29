@@ -185,13 +185,14 @@ const ShoppingCartPage = ({ cartItems, handleDeleteCartItem, isDarkMode }) => {
                     key={item.id}
                     className={index % 2 === 0 ? "even-row" : "odd-row"}
                   >
-                    <td>
+                    <td style={{position:'relative'}}>
                       <img
                         src={item.imageUrl}
                         alt="Product"
                         className="cart-item-image"
-                        onClick={() => openModal(index)} // Open modal when image is clicked
+                        onClick={() => openModal(index)} 
                       />
+                      <WaterMark height="15px" fontSize="6px"/>
                     </td>
                     <td>{getRandomMedia(item.name)}</td>
                     <td>₹{item.cost}</td>

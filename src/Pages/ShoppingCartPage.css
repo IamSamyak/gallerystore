@@ -77,16 +77,16 @@
 }
 
 .cart-items-table.dark-mode-table th {
-  background-color: #2A2A2A; /* Dark header */
+  background-color: #333333; /* Slightly lighter dark header */
   font-weight: bold;
 }
 
 .cart-items-table.dark-mode-table .even-row {
-  background-color: #1C1C1C; /* Dark even row */
+  background-color: #2A2A2A; /* Slightly lighter dark even row */
 }
 
 .cart-items-table.dark-mode-table .odd-row {
-  background-color: #2E2E2E; /* Dark odd row */
+  background-color: #1E1E1E; /* Match the base background color */
 }
 
 /* Light mode styles */

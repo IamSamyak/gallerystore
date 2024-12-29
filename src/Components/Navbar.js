@@ -79,7 +79,7 @@ function Navbar({ isDarkMode }) {
         <div className={`navbar-container ${isDarkMode ? 'navbar-dark-mode' : ''}`}>
           <MenuIcon style={{ color: isDarkMode ? '#fff' : '#000' }} className="menu-icon" onClick={() => setShowMenu(!showMenu)} />
           {showMenu && (
-            <ul className="mobile-menu">
+            <ul className={`mobile-menu ${isDarkMode ? 'mobile-menu-dark-mode' : ''}`} >
               <li
                 className={selectedLink === 'Home' ? 'selected' : ''}
                 onClick={() => handleNavigation('Home')}
@@ -127,51 +127,52 @@ function Navbar({ isDarkMode }) {
         </div>
       ) : (
         <div className={`navbar-container ${isDarkMode ? 'navbar-dark-mode' : ''}`}>
-          <ul>
+        <ul>
+          <li
+            className={selectedLink === 'Home' ? 'selected' : ''}
+            onClick={() => handleNavigation('Home')}
+          >
+            Home
+          </li>
+          <li
+            className={selectedLink === 'Pricing' ? 'selected' : ''}
+            onClick={() => handleNavigation('Pricing')}
+          >
+            Pricing
+          </li>
+          {isAdminLoggedIn ? (
             <li
-              className={selectedLink === 'Home' ? 'selected' : ''}
-              onClick={() => handleNavigation('Home')}
+              className={selectedLink === 'Upload Assets' ? 'selected' : ''}
+              onClick={() => handleNavigation('Upload Assets')}
             >
-              Home
+              Upload Assets
             </li>
+          ) : (
             <li
-              className={selectedLink === 'Pricing' ? 'selected' : ''}
-              onClick={() => handleNavigation('Pricing')}
+              className={selectedLink === 'Contact Us' ? 'selected' : ''}
+              onClick={() => handleNavigation('Contact Us')}
             >
-              Pricing
+              Contact Us
             </li>
-            {isAdminLoggedIn ? (
-              <li
-                className={selectedLink === 'Upload Assets' ? 'selected' : ''}
-                onClick={() => handleNavigation('Upload Assets')}
-              >
-                Upload Assets
-              </li>
-            ) : (
-              <li
-                className={selectedLink === 'Contact Us' ? 'selected' : ''}
-                onClick={() => handleNavigation('Contact Us')}
-              >
-                Contact Us
-              </li>
-            )}
-            {!isAdminLoggedIn ? (
-              <li
-                className={selectedLink === 'Cart' ? 'selected' : ''}
-                onClick={() => handleNavigation('Cart')}
-              >
-                Cart
-              </li>
-            ) : (
-              <li
-                className={selectedLink === 'Logout' ? 'selected' : ''}
-                onClick={() => handleNavigation('Logout')}
-              >
-                Logout
-              </li>
-            )}
-          </ul>
-        </div>
+          )}
+          {!isAdminLoggedIn ? (
+            <li
+              className={selectedLink === 'Cart' ? 'selected' : ''}
+              onClick={() => handleNavigation('Cart')}
+            >
+              Cart
+            </li>
+          ) : (
+            <li
+              className={selectedLink === 'Logout' ? 'selected' : ''}
+              onClick={() => handleNavigation('Logout')}
+            >
+              Logout
+            </li>
+          )}
+        </ul>
+      </div>
+      
       )}
     </div>
   );

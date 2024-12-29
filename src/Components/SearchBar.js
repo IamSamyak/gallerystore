@@ -9,7 +9,7 @@ const SearchBar = ({ searchTerm, setSearchTerm }) => {
         <SearchIcon className="search-icon" style={{height:'2.5rem', width:'2.5rem'}}/>
         <input
           type="text"
-          placeholder="Search by city name"
+          placeholder="Search by your event..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           className="search-input"

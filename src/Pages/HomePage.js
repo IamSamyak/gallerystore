@@ -6,16 +6,17 @@ import { useLocation, useNavigate } from "react-router-dom";
 import SearchBar from "../Components/SearchBar";
 import ImageSlider from "../Components/ImageSlider";
 import HomePageCard from "../Components/HomePageCard";
+import DateRangePicker from "../Components/DateRangePicker";
 
-const HomePage = ({isDarkMode}) => {
+const HomePage = ({ isDarkMode }) => {
   const [homePageAssets, setHomePageAssets] = useState([]);
   const navigate = useNavigate();
   const location = useLocation();
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
+  const [selectedDate, setSelectedDate] = useState(""); // State to hold the selected date
 
-  // Fetch assets when the component mounts
   useEffect(() => {
     axios
       .get(`${config.BASE_URL}/assets/preview`)
@@ -56,17 +57,18 @@ const HomePage = ({isDarkMode}) => {
     return <div>{error}</div>;
   }
 
-  // Filter assets based on search term
   const filteredAssets = homePageAssets.filter((homePageAsset) =>
-    homePageAsset.location.toLowerCase().includes(searchTerm.toLowerCase())
+    Object.entries(homePageAsset).some(([key, value]) =>
+      key !== "date" && value.toString().toLowerCase().includes(searchTerm.toLowerCase())
+    )
   );
 
   return (
     <div className="home-page">
       <ImageSlider />
-        {/* <div className="banner">
+      {/* <div className="banner">
         <img
-          // src="https://media.istockphoto.com/id/1124687034/photo/man-on-wheelchair-taking-photos-of-beautiful-landscape-in-a-foggy-morning-st-thomas-slovenia.jpg?s=1024x1024&w=is&k=20&c=e0uuTVFb3TLlt02m2EAm_1LuRw8gyMBsPk9FF24JZDk="
+          // src="https://media.istockphoto.com/id/1124687034/photo/man-on-wheelchair-taking-photos-of-beautiful-landscape-in-a-foggy-morning-st-thomas-slovenia.jpg?s=1024x1024&w=is&k=20&c=e0uuTVFb3TLlt02m2EAm_1LuRw8gyMBsPk9FF24JZDk=" 
           src="https://store.sony.com.au/on/demandware.static/-/Library-Sites-sony-shared-library/default/dwb1bfa1fa/content/category/cameras/camera-category-banner.jpg"
           alt="Banner"
           className="banner-image"
@@ -83,20 +85,24 @@ const HomePage = ({isDarkMode}) => {
         <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
       </div>
 
+      {/* <div className="home-page-date-container">
+        <DateRangePicker/>
+      </div> */}
+
       <div className="home-page-card-container">
-      {filteredAssets.map((filteredAsset, index) => (
-        <HomePageCard
-          key={index}
-          imageUrl={filteredAsset.imageUrl}
-          customerName={filteredAsset.customerName}
-          location={filteredAsset.location}
-          date="25-09-2022"
-          cost="₹ 20000"
-          onDetailsClick={() => navigate(`/gallery/${filteredAsset.groupId}`)}
-          isDarkMode={isDarkMode}
-        />
-      ))}
-    </div>
+        {filteredAssets.map((filteredAsset, index) => (
+          <HomePageCard
+            key={index}
+            imageUrl={filteredAsset.imageUrl}
+            customerName={filteredAsset.customerName}
+            location={filteredAsset.location}
+            date="25-09-2022"
+            cost="₹ 20000"
+            onDetailsClick={() => navigate(`/gallery/${filteredAsset.groupId}`)}
+            isDarkMode={isDarkMode}
+          />
+        ))}
+      </div>
     </div>
   );
 };

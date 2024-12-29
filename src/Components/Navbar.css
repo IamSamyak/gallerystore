@@ -58,7 +58,7 @@
     justify-content: center;
     position: relative;
     background-color: #ffffff;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1);
+    /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1); */
 }
 
 ul {
@@ -68,19 +68,49 @@ ul {
     justify-content: space-around;
 }
 
+/* Common li styles */
 li {
     padding: 0 20px;
     font-weight: 500;
     font-size: 1.25rem;
     cursor: pointer;
     position: relative;
-    transition: color 0.3s ease, border-bottom 0.3s ease;
-}
-
-li.selected {
-    color: #2196f3;
-    border-bottom: 2px solid #2196f3;
-}
+    transition: color 0.3s ease, border-bottom 0.3s ease, text-shadow 0.3s ease, transform 0.3s ease;
+    letter-spacing: 0.05em;
+  }
+  
+  /* Light Mode Styles */
+  .navbar-container:not(.navbar-dark-mode) li {
+    color: #000; /* Default color for light mode */
+  }
+  
+  .navbar-container:not(.navbar-dark-mode) li.selected {
+    color: #2196f3; /* Selected color in light mode */
+    border-bottom: 2px solid #2196f3; /* Selected border color */
+    transform: scale(1.1); /* Scale the selected item by 1.1 */
+  }
+  
+  /* Dark Mode Styles */
+  .navbar-container.navbar-dark-mode li {
+    color: #e0e0e0; /* Light color for dark mode */
+  }
+  
+  .navbar-container.navbar-dark-mode li.selected {
+    color: #A0DEFF; /* Selected color in dark mode */
+    border-bottom: 2px solid #A0DEFF; /* Selected border color */
+    transform: scale(1.15); /* Scale the selected item by 1.1 */
+  }
+  
+  .navbar-container.navbar-dark-mode li:hover {
+    color: #fff; 
+    text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #fff; 
+  }
+  
+  .navbar-container.navbar-dark-mode li.selected:hover {
+    color: #64B5F6; /* Lighter blue on hover for selected item in dark mode */
+    border-bottom: 2px solid #64B5F6; /* Lighter border color on hover */
+    text-shadow: none; /* No glow effect for selected item */
+  } 
 
 .navbar-container.navbar-dark-mode {
     /* border: 1px solid rgba(255, 255, 255, 0.3); */
@@ -114,8 +144,9 @@ li.selected {
         top: calc(100% + 10px);
         /* Ensure the menu appears below the icon */
         right: 4%;
-        background-color: #1a1a1a;
+        background-color: white;
         /* Dark mobile menu background */
+        color: black;
         border-radius: 0 0 15px 15px;
         width: 30%;
         z-index: 1000;
@@ -127,13 +158,17 @@ li.selected {
         padding-left: 0;
     }
 
+    .mobile-menu.mobile-menu-dark-mode  {
+        background-color: #000000;
+        color: #fff; /* White icon color for dark mode */
+    }
+
     .mobile-menu li {
         padding: 10px 20px;
         text-align: center;
         border-bottom: 1px solid #444;
         /* Darker border for contrast */
         font-size: 0.75rem;
-        color: #e0e0e0;
         /* Light gray text for dark mode */
     }
 

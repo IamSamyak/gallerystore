@@ -1,0 +1,86 @@
+/* General calendar container styling */
+.calendar-container {
+    width: 300px;
+    margin: auto;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #fff;
+  }
+  
+  /* Calendar header styling */
+  .calendar-header {
+    text-align: center;
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+  
+  /* Calendar grid styling */
+  .calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+  }
+  
+  /* Basic day styling */
+  .calendar-day {
+    text-align: center;
+    padding: 10px;
+    cursor: pointer;
+    background-color: #f0f0f0;
+    border-radius: 4px;
+  }
+  
+  /* Hover effect for individual day */
+  .calendar-day:hover {
+    background-color: #ddd;
+  }
+  
+  /* Highlighting the selected date range */
+  .in-range {
+    background-color: #90caf9; /* Color for the entire range of dates */
+  }
+  
+  /* Start date styling */
+  .start-date {
+    background-color: #66bb6a; /* Green color for the start date */
+    color: white;
+  }
+  
+  /* End date styling */
+  .end-date {
+    background-color: #ef5350; /* Red color for the end date */
+    color: white;
+  }
+  
+  /* Days between the range */
+  .range-selected {
+    background-color: #90caf9; /* Light blue for the range */
+  }
+  
+  /* Hover effect while selecting the range */
+  .hovered {
+    background-color: #f0f0f0;
+    color: #2196f3;
+  }
+  
+  /* Info about the selected range */
+  .date-range-info {
+    margin-top: 15px;
+    text-align: center;
+  }
+  
+  /* Dark mode styles */
+  .dark-mode .calendar-container {
+    background-color: #333;
+    color: #fff;
+  }
+  
+  .dark-mode .calendar-day {
+    background-color: #555;
+  }
+  
+  .dark-mode .calendar-day:hover {
+    background-color: #777;
+  }
+  

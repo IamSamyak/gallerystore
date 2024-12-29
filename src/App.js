@@ -10,7 +10,7 @@ import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-route
 import Gallery from './Pages/Gallery';
 import AdminLogin from './Pages/AdminLogin';
 import Payment from './Components/Payment';
-import PrivateRoute from './Components/PrivateRoute';  // Import the PrivateRoute component
+import PrivateRoute from './Components/PrivateRoute';  
 import { Footer } from './Components/Footer';
 import FileUpload from './Pages/TempAsset';
 
