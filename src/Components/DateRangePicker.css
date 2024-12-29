@@ -1,86 +1,245 @@
 /* General calendar container styling */
 .calendar-container {
-    width: 300px;
-    margin: auto;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    background-color: #fff;
-  }
-  
-  /* Calendar header styling */
-  .calendar-header {
-    text-align: center;
-    font-size: 18px;
-    margin-bottom: 10px;
-  }
-  
-  /* Calendar grid styling */
-  .calendar-grid {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 5px;
-  }
-  
-  /* Basic day styling */
-  .calendar-day {
-    text-align: center;
-    padding: 10px;
-    cursor: pointer;
-    background-color: #f0f0f0;
-    border-radius: 4px;
-  }
-  
-  /* Hover effect for individual day */
-  .calendar-day:hover {
-    background-color: #ddd;
-  }
-  
-  /* Highlighting the selected date range */
-  .in-range {
-    background-color: #90caf9; /* Color for the entire range of dates */
-  }
-  
-  /* Start date styling */
-  .start-date {
-    background-color: #66bb6a; /* Green color for the start date */
-    color: white;
-  }
-  
-  /* End date styling */
-  .end-date {
-    background-color: #ef5350; /* Red color for the end date */
-    color: white;
-  }
-  
-  /* Days between the range */
-  .range-selected {
-    background-color: #90caf9; /* Light blue for the range */
-  }
-  
-  /* Hover effect while selecting the range */
-  .hovered {
-    background-color: #f0f0f0;
-    color: #2196f3;
-  }
-  
-  /* Info about the selected range */
-  .date-range-info {
-    margin-top: 15px;
-    text-align: center;
-  }
-  
-  /* Dark mode styles */
-  .dark-mode .calendar-container {
-    background-color: #333;
-    color: #fff;
-  }
-  
-  .dark-mode .calendar-day {
-    background-color: #555;
-  }
-  
-  .dark-mode .calendar-day:hover {
-    background-color: #777;
-  }
-  
+  width: 350px;
+  margin: auto;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  position: absolute;
+  z-index: 1000;
+  right: 1.4vw;
+  top: 7vh;
+}
+
+/* Calendar header styling */
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.calendar-header button {
+  padding: 5px 10px;
+  font-size: 16px;
+  cursor: pointer;
+  border: none;
+  border-radius: 4px;
+  margin-bottom: 0;
+}
+
+.calendar-header span {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  position: relative;
+  padding: 5px 10px;
+  border-radius: 7px;
+}
+
+/* Calendar grid styling */
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 5px;
+  margin-top: 15px;
+}
+
+/* Weekdays header styling */
+.calendar-weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 5px;
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+/* Styling for Saturday and Sunday */
+.calendar-weekday.sunday,
+.calendar-weekday.saturday,
+.calendar-day.sunday,
+.calendar-day.saturday {
+  color: red;
+  /* Red text color for weekends */
+}
+
+.calendar-weekday {
+  text-align: center;
+  padding: 10px;
+  background-color: #e0e0e0;
+  border-radius: 4px;
+}
+
+/* Basic day styling */
+.calendar-day {
+  text-align: center;
+  padding: 10px;
+  cursor: pointer;
+  background-color: #f0f0f0;
+  border-radius: 4px;
+}
+
+/* Placeholder styling */
+.calendar-day.placeholder {
+  background-color: transparent;
+}
+
+/* Hover effect for individual day */
+.calendar-day:hover {
+  background-color: #ddd;
+}
+
+/* Hover effect while selecting the range */
+.hovered {
+  background-color: #f0f0f0;
+  color: #2196f3;
+}
+
+/* Info about the selected range */
+.date-range-info {
+  margin-top: 15px;
+  text-align: center;
+}
+
+.month-selector-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+}
+
+.month-selector-container {
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  width: 100%;
+  max-width: 400px;
+  height: 100%;
+  text-align: center;
+}
+
+.current-month {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.month-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-top: 35px;
+}
+
+.month-item {
+  padding: 10px;
+  cursor: pointer;
+  background: #f0f0f0;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+  /* Smooth hover effect */
+}
+
+.month-item:hover {
+  background: #e0e0e0;
+  /* Background color effect on hover */
+}
+
+.year-selector-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+}
+
+.year-selector-container {
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  width: 100%;
+  max-width: 400px;
+  height: 100%;
+  text-align: center;
+  overflow-y: scroll;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  position: relative;
+}
+
+.current-year {
+  font-weight: bold;
+  font-size: 1.25rem;
+}
+
+/* Hide scrollbar for WebKit-based browsers (Chrome, Safari) */
+.year-selector-container::-webkit-scrollbar {
+  display: none;
+}
+
+/* Add a gradient blur effect at the top and bottom */
+.year-selector-container::before,
+.year-selector-container::after {
+  content: '';
+  position: sticky;
+  left: 0;
+  width: 100%;
+  height: 30px;
+  pointer-events: none;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0));
+  z-index: 10;
+}
+
+.year-selector-container::before {
+  top: 0;
+}
+
+.year-selector-container::after {
+  bottom: 0;
+  background: linear-gradient(to top, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0));
+}
+
+.year-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-top: 15px;
+  padding-top: 35px;
+}
+
+.year-item {
+  padding: 10px;
+  cursor: pointer;
+  background: #f0f0f0;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+  /* Smooth hover effect */
+}
+
+.year-item:hover {
+  background: #e0e0e0;
+  /* Background color effect on hover */
+}
+
+.close-button {
+  position: absolute;
+  top: 23px;
+  right: 20px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+}

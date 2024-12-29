@@ -80,14 +80,11 @@ const HomePage = ({ isDarkMode }) => {
           "Capturing moments, telling stories, and freezing time with every click. Explore breathtaking landscapes, beautiful portraits, and much more through my lens. Join me on this visual journey to discover the art of photography in its purest form."
         </p>
       </div>
-
-      <div id="searchBarDiv">
+ 
+      <div id="searchBarDiv" >
         <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+        <DateRangePicker isDarkMode={isDarkMode} color="#000" calendarsBackgroundColor='#fff' selectedTextColor="#fff" dayBackgroundColor="#f0f0f0" hoverBackgroundColor="#ddd" calendarWeekDayBackgroundColor="#e0e0e0"/>
       </div>
-
-      {/* <div className="home-page-date-container">
-        <DateRangePicker/>
-      </div> */}
 
       <div className="home-page-card-container">
         {filteredAssets.map((filteredAsset, index) => (
