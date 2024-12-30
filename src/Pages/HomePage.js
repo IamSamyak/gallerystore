@@ -82,8 +82,9 @@ const HomePage = ({ isDarkMode }) => {
       </div>
 
       <div id="searchBarDiv" >
-        <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+        <SearchBar isDarkMode={isDarkMode} searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
         <DateRangePicker
+          isDarkMode={isDarkMode}
           color={isDarkMode ? undefined : "#000"}
           calendarsBackgroundColor={isDarkMode ? undefined : "#fff"}
           selectedTextColor={isDarkMode ? undefined : "#fff"}

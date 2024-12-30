@@ -213,7 +213,7 @@ const ShoppingCartPage = ({ cartItems, handleDeleteCartItem, isDarkMode }) => {
 
       {modalOpen && (
         <div className="modal-container">
-          <div className="modal-content" style={{ position: 'relative' }}>
+          <div className="modal-content-shopping-cart" style={{ position: 'relative' }}>
             <ArrowBackIosNewIcon
               onClick={goToPreviousImage}
               className="modal-nav-arrow-left"

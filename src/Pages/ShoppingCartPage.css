@@ -299,7 +299,7 @@ td {
   z-index: 1000;
 }
 
-.modal-content {
+.modal-content-shopping-cart {
   position: relative;
   width: 500px;
   /* Fixed width */

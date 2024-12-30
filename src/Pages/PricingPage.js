@@ -1,5 +1,6 @@
-import React from 'react';
-import './PricingPage.css'; // Make sure to define your CSS classes here
+import React, { useState } from 'react';
+import './PricingPage.css'; 
+import ChatbotModal from '../Components/ChatbotModal';
 
 const plans = [
   {
@@ -44,6 +45,18 @@ const plans = [
 ];
 
 const PricingPage = ({isDarkMode}) => {
+
+  
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleModalOpen = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleModalClose = () => {
+    setIsModalOpen(false);
+  };
+
   const icons = [
     'fas fa-gem',
     'fas fa-crown',
@@ -52,33 +65,40 @@ const PricingPage = ({isDarkMode}) => {
   ];
 
   return (
-    <div className="card-container-shopping-page">
-      {plans.map((plan, index) => (
-        <div
-          className={`card-wrap-pricing-page ${isDarkMode ? 'card-wrap-pricing-page-dark-mode' : ''}`}
-          key={index}
-        >
-          <div className={`card-header ${['one', 'two', 'three', 'four'][index % 4]}`}>
-            <i className={icons[index % icons.length]}></i>
-          </div>
-          <div className="card-content">
-            <h1 className="card-title">{plan.title}</h1>
-            <p className="card-price">{plan.price}</p>
-            <div className="card-features">
-              {plan.features.map((feature, i) => (
-                <div key={i}>{feature}</div>
-              ))}
+    <>
+      <div className="card-container-shopping-page">
+        {plans.map((plan, index) => (
+          <div
+            className={`card-wrap-pricing-page ${isDarkMode ? 'card-wrap-pricing-page-dark-mode' : ''}`}
+            key={index}
+          >
+            <div className={`card-header ${['one', 'two', 'three', 'four'][index % 4]}`}>
+              <i className={icons[index % icons.length]}></i>
             </div>
-            <button className={`card-btn ${['one', 'two', 'three', 'four'][index % 4]}`}>
-              Choose
-              {/* {plan.title} */}
-            </button>
+            <div className="card-content">
+              <h1 className="card-title">{plan.title}</h1>
+              <p className="card-price">{plan.price}</p>
+              <div className="card-features">
+                {plan.features.map((feature, i) => (
+                  <div key={i}>{feature}</div>
+                ))}
+              </div>
+              <button
+                style={{cursor:'pointer'}}
+                className={`card-btn ${['one', 'two', 'three', 'four'][index % 4]}`}
+                onClick={handleModalOpen}
+              >
+                Choose
+              </button>
+            </div>
           </div>
-        </div>
-      ))}
-    </div>
-
+        ))}
+      </div>
+      <ChatbotModal isOpen={isModalOpen} onClose={handleModalClose} />
+    </>
   );
 };
 
 export default PricingPage;
+
+
