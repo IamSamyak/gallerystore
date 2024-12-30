@@ -16,7 +16,7 @@ import FileUpload from './Pages/TempAsset';
 
 function App() {
   const [cartItems, setCartItems] = useState([]);
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(true);
 
   const addToCart = (item) => {
     setCartItems((prevItems) => {

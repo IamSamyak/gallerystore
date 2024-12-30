@@ -8,7 +8,8 @@
   position: absolute;
   z-index: 1000;
   right: 1.4vw;
-  top: 7vh;
+  top: 10vh;
+  /* font-family: Nunito, sans-serif; */
 }
 
 /* Calendar header styling */
@@ -25,8 +26,18 @@
   font-size: 16px;
   cursor: pointer;
   border: none;
-  border-radius: 4px;
+  border-radius: 8px;
   margin-bottom: 0;
+}
+
+.calendar-icon {
+  color: #fff; /* White color for the icon */
+  margin-right: 10px;
+  font-size: 2.75rem; /* Larger icon size */
+  padding: 5px; /* Larger padding around the icon for a bigger circular background */
+  border-radius: 50%; /* Circular border */
+  background-color: #2196f3; /* Background color of the icon */
+  border: none; /* Remove any border */
 }
 
 .calendar-header span {
@@ -34,8 +45,9 @@
   align-items: center;
   gap: 10px;
   position: relative;
-  padding: 5px 10px;
-  border-radius: 7px;
+  padding: 1px 10px;
+  margin-bottom: 4px;
+  /* border-radius: 7px; */
 }
 
 /* Calendar grid styling */

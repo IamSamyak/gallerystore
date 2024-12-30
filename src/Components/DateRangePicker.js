@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import "./DateRangePicker.css";
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
 // Utility function to generate a list of days in a month
 const generateMonthDays = (year, month) => {
@@ -12,7 +15,7 @@ const generateMonthDays = (year, month) => {
   }
   return days;
 };        
-/*                                  #000                                                            #fff                           #fff                       #f0f0f0                           #ddd                                                                                                                                     #e0e0e0                                                  #e0e0e0        */
+/*                                  #000                    #2196f3                                     #fff                           #fff                       #f0f0f0                           #ddd                                                                                                                                     #e0e0e0                                                  #e0e0e0        */
 const DateRangePicker = ({ color = "#fff", backgroundColor = "#2196f3", calendarsBackgroundColor = "#1e1e1e", selectedTextColor = "#000", dayBackgroundColor = "#333333", hoverBackgroundColor = "#4c4c4c", onHoverBackgroundColorForHeadings='#4caf50', inBetweenSelectedDateRangeColor='rgb(107 186 249)', calendarWeekDayBackgroundColor='#0d0d0d' }) => {
   const [selectedStartDate, setSelectedStartDate] = useState(null);
   const [selectedEndDate, setSelectedEndDate] = useState(null);
@@ -109,63 +112,54 @@ const DateRangePicker = ({ color = "#fff", backgroundColor = "#2196f3", calendar
 const [isCalendarVisible, setIsCalendarVisible] = useState(false);
 
 return (
-  <div className="date-range-picker-container" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-    <div
-      className="input-container"
-      style={{
-        display: 'flex',
-        alignItems: 'center',
-        width: '350px',
-        marginRight: '1.5vw',
-        borderRadius: '16px',
-        border: '1px solid #ccc',
-        padding: '12px 24px',
-        width: '300px',
-        backgroundColor: '#fff',
-        cursor: 'pointer',
-      }}
-      onClick={() => setIsCalendarVisible(!isCalendarVisible)}
-    >
-      <span style={{ flexGrow: 1, color: '#666' }}>
-        {selectedStartDate && selectedEndDate
-          ? `${selectedStartDate.toLocaleDateString()} - ${selectedEndDate.toLocaleDateString()}`
-          : 'Select Date Range'}
-      </span>
-      <button
-        onClick={() => setIsCalendarVisible(!isCalendarVisible)}
-        style={{
-          backgroundColor: 'transparent',
-          border: 'none',
-          cursor: 'pointer',
-          color: '#666',
-          marginBottom: '0',
-        }}
-      >
-        📅
-      </button>
-    </div>
+  <div className="date-range-picker-container" style={{ display: 'flex', flexDirection: 'column', alignItems: 'end', width:'50%' }}>
+   <div
+  className="input-container"
+  style={{
+    display: 'flex',
+    alignItems: 'center',
+    maxWidth: '500px',  
+    width: '100%',  
+    height: '100%',
+    borderRadius: '16px',
+    border: '1px solid #ccc',
+    borderRadius: '50px',
+    padding: '10px 20px',
+    cursor: 'pointer',
+    backgroundColor: '#f5f5f5'
+  }}
+  onClick={() => setIsCalendarVisible(!isCalendarVisible)}
+>
+  <CalendarMonthIcon className="calendar-icon" style={{height:'2.5rem', width:'2.5rem'}}/>
+  <span style={{ flexGrow: 1, color: '#666', padding:'10px' }}>
+    {selectedStartDate && selectedEndDate
+      ? `${selectedStartDate.toLocaleDateString()} - ${selectedEndDate.toLocaleDateString()}`
+      : 'Select Date Range'}
+  </span>
+</div>
 
     {isCalendarVisible && (
       <div className="calendar-container" style={{ backgroundColor: calendarsBackgroundColor, marginTop: '10px', borderRadius: '8px', padding: '10px', boxShadow: '0 2px 10px rgba(0,0,0,0.1)' }}>
         <div className="calendar-header">
-          <button style={{ backgroundColor, color }} onClick={handlePreviousMonth}>&lt;</button>
+          <button style={{ backgroundColor, color: selectedTextColor }} onClick={handlePreviousMonth}>&lt;</button>
+          {/* <ArrowBackIosNewIcon className="backfront-icons" sx={{color,height:'1.75rem',width:'1.75rem'}} onClick={handlePreviousMonth}/> */}
           <span
             onClick={() => setIsMonthSelectorOpen(true)}
-            style={{ cursor: 'pointer', color }}
-            onMouseEnter={(e) => { e.target.style.backgroundColor = onHoverBackgroundColorForHeadings; }}
-            onMouseLeave={(e) => { e.target.style.backgroundColor = ''; }}
+            style={{ cursor: 'pointer', color, fontSize:'1.25rem', fontWeight:'bold', borderBottom:`1px solid ${color}` }}
+            // onMouseEnter={(e) => { e.target.style.backgroundColor = onHoverBackgroundColorForHeadings; }}
+            // onMouseLeave={(e) => { e.target.style.backgroundColor = ''; }}
           >
             {monthNames[currentDate.getMonth()]}
           </span>
           <span
             onClick={() => setIsYearSelectorOpen(true)}
-            style={{ cursor: 'pointer', color }}
-            onMouseEnter={(e) => { e.target.style.backgroundColor = onHoverBackgroundColorForHeadings; }}
-            onMouseLeave={(e) => { e.target.style.backgroundColor = ''; }}
+            style={{ cursor: 'pointer', color, fontSize:'1.25rem', fontWeight:'bold', borderBottom:`1px solid ${color}` }}
+            // onMouseEnter={(e) => { e.target.style.backgroundColor = onHoverBackgroundColorForHeadings; }}
+            // onMouseLeave={(e) => { e.target.style.backgroundColor = ''; }}
           >
             {currentDate.getFullYear()}
           </span>
-          <button style={{ backgroundColor, color }} onClick={handleNextMonth}>&gt;</button>
+          <button style={{ backgroundColor, color: selectedTextColor }} onClick={handleNextMonth}>&gt;</button>
         </div>
 
         {isMonthSelectorOpen && (
@@ -266,7 +260,7 @@ return (
           })}
         </div>
 
-        <div className="date-range-info">
+        {/* <div className="date-range-info">
           {selectedStartDate && selectedEndDate ? (
             <p>
               Selected Date Range: {selectedStartDate.toLocaleDateString()} to {selectedEndDate.toLocaleDateString()}
@@ -276,7 +270,7 @@ return (
           ) : (
             <p>Select a start date</p>
           )}
-        </div>
+        </div> */}
       </div>
     )}
   </div>
