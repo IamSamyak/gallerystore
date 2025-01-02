@@ -15,9 +15,12 @@ const HomePage = ({ isDarkMode }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectedDate, setSelectedDate] = useState(""); // State to hold the selected date
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
+  const [filteredAssets, setFilteredAssets] = useState([]);
 
   useEffect(() => {
+    setLoading(true);
     axios
       .get(`${config.BASE_URL}/assets/preview`)
       .then((response) => {
@@ -31,7 +34,29 @@ const HomePage = ({ isDarkMode }) => {
       });
   }, []);
 
-  // Programmatically navigate to the SearchBar div when the component mounts or is navigated to
+  useEffect(() => {
+    const applyFilters = () => {
+      let filteredByDate = homePageAssets;
+
+      if (startDate && endDate) {
+        filteredByDate = homePageAssets.filter((asset) => {
+          const assetDate = new Date(asset.date);
+          return assetDate >= startDate && assetDate <= endDate;
+        });
+      }
+
+      const filteredBySearchTerm = filteredByDate.filter((homePageAsset) =>
+        Object.entries(homePageAsset).some(([key, value]) =>
+          key !== "date" && value.toString().toLowerCase().includes(searchTerm.toLowerCase())
+        )
+      );
+
+      setFilteredAssets(filteredBySearchTerm);
+    };
+
+    applyFilters();
+  }, [searchTerm, startDate, endDate, homePageAssets]);
+
   useEffect(() => {
     if (location.state && location.state.focusOn) {
       const part = location.state.focusOn;
@@ -47,7 +72,7 @@ const HomePage = ({ isDarkMode }) => {
       }
       navigate(location.pathname, { replace: true });
     }
-  }, [location.state]);
+  }, [location.state, navigate]);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -57,23 +82,15 @@ const HomePage = ({ isDarkMode }) => {
     return <div>{error}</div>;
   }
 
-  const filteredAssets = homePageAssets.filter((homePageAsset) =>
-    Object.entries(homePageAsset).some(([key, value]) =>
-      key !== "date" && value.toString().toLowerCase().includes(searchTerm.toLowerCase())
-    )
-  );
+  const ApplyDateRangeFilter = (startDate, endDate) => {
+    setStartDate(startDate);
+    setEndDate(endDate);
+  };
 
   return (
     <div className="home-page">
       <ImageSlider />
-      {/* <div className="banner">
-        <img
-          // src="https://media.istockphoto.com/id/1124687034/photo/man-on-wheelchair-taking-photos-of-beautiful-landscape-in-a-foggy-morning-st-thomas-slovenia.jpg?s=1024x1024&w=is&k=20&c=e0uuTVFb3TLlt02m2EAm_1LuRw8gyMBsPk9FF24JZDk=" 
-          src="https://store.sony.com.au/on/demandware.static/-/Library-Sites-sony-shared-library/default/dwb1bfa1fa/content/category/cameras/camera-category-banner.jpg"
-          alt="Banner"
-          className="banner-image"
-        />
-      </div> */}
+
       <div className="exciting-message">
         <h2 style={{ color: isDarkMode ? '#FFF' : '#333' }}>Welcome to the World of Photography by Ravi Gore!</h2>
         <p style={{ color: isDarkMode ? '#CCC' : '#555' }}>
@@ -81,7 +98,7 @@ const HomePage = ({ isDarkMode }) => {
         </p>
       </div>
 
-      <div id="searchBarDiv" >
+      <div id="searchBarDiv">
         <SearchBar isDarkMode={isDarkMode} searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
         <DateRangePicker
           isDarkMode={isDarkMode}
@@ -91,8 +108,8 @@ const HomePage = ({ isDarkMode }) => {
           dayBackgroundColor={isDarkMode ? undefined : "#f0f0f0"}
           hoverBackgroundColor={isDarkMode ? undefined : "#ddd"}
           calendarWeekDayBackgroundColor={isDarkMode ? undefined : "#e0e0e0"}
+          ApplyDateRangeFilter={ApplyDateRangeFilter}
         />
-
       </div>
 
       <div className="home-page-card-container">
@@ -102,8 +119,8 @@ const HomePage = ({ isDarkMode }) => {
             imageUrl={filteredAsset.imageUrl}
             customerName={filteredAsset.customerName}
             location={filteredAsset.location}
-            date="25-09-2022"
-            cost="₹ 20000"
+            date={filteredAsset.date}
+            cost={`₹ ${filteredAsset.cost.toFixed(2)}`}
             onDetailsClick={() => navigate(`/gallery/${filteredAsset.groupId}`)}
             isDarkMode={isDarkMode}
           />

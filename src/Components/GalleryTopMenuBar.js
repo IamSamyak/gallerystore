@@ -10,6 +10,7 @@ const GalleryTopMenuBar = ({
     galleryAssets,
     addToCart,
     setShowNotification,
+    setNotificationMsgAndBGC,
     isDarkMode
 }) => {
     const navigate = useNavigate();
@@ -22,6 +23,7 @@ const GalleryTopMenuBar = ({
         setIsSelected(!isSelected);
         if (!isSelected) {
             galleryAssets.forEach(item => addToCart(item));
+            setNotificationMsgAndBGC({msg:'All assets are added to cart successfully!!!',BGC:'#28a745'});
             setShowNotification(true);
             setTimeout(() => setShowNotification(false), 3000);
         }

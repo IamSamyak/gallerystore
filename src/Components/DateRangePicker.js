@@ -16,7 +16,7 @@ const generateMonthDays = (year, month) => {
   return days;
 };
 /*                                  #000                    #2196f3                                     #fff                           #fff                       #f0f0f0                           #ddd                                                                                                                                     #e0e0e0                                                  #e0e0e0        */
-const DateRangePicker = ({ isDarkMode = false, color = "#fff", backgroundColor = "#2196f3", calendarsBackgroundColor = "#1e1e1e", selectedTextColor = "#000", dayBackgroundColor = "#333333", hoverBackgroundColor = "#4c4c4c", onHoverBackgroundColorForHeadings = '#4caf50', inBetweenSelectedDateRangeColor = 'rgb(107 186 249)', calendarWeekDayBackgroundColor = '#0d0d0d' }) => {
+const DateRangePicker = ({ isDarkMode = false, color = "#fff", backgroundColor = "#2196f3", calendarsBackgroundColor = "#1e1e1e", selectedTextColor = "#000", dayBackgroundColor = "#333333", hoverBackgroundColor = "#4c4c4c", onHoverBackgroundColorForHeadings = '#4caf50', inBetweenSelectedDateRangeColor = 'rgb(107 186 249)', calendarWeekDayBackgroundColor = '#0d0d0d', ApplyDateRangeFilter }) => {
   const [selectedStartDate, setSelectedStartDate] = useState(null);
   const [selectedEndDate, setSelectedEndDate] = useState(null);
   const [hoveredDate, setHoveredDate] = useState(null);
@@ -24,6 +24,8 @@ const DateRangePicker = ({ isDarkMode = false, color = "#fff", backgroundColor =
   const [currentDate, setCurrentDate] = useState(new Date());
   const [isMonthSelectorOpen, setIsMonthSelectorOpen] = useState(false);
   const [isYearSelectorOpen, setIsYearSelectorOpen] = useState(false);
+
+  const [isCalendarVisible, setIsCalendarVisible] = useState(false);
 
   const daysInMonth = generateMonthDays(currentDate.getFullYear(), currentDate.getMonth());
   const firstDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1).getDay();
@@ -36,9 +38,13 @@ const DateRangePicker = ({ isDarkMode = false, color = "#fff", backgroundColor =
     } else if (selectedStartDate && !selectedEndDate) {
       if (date >= selectedStartDate) {
         setSelectedEndDate(date);
+        setIsCalendarVisible(false);  
+        ApplyDateRangeFilter(selectedStartDate,date);
       } else {
         setSelectedEndDate(selectedStartDate);
-        setSelectedStartDate(date);
+        setSelectedStartDate(date);  
+        setIsCalendarVisible(false);  
+        ApplyDateRangeFilter(date,selectedEndDate);
       }
     } else if (selectedStartDate && selectedEndDate) {
       // Reset selection
@@ -109,7 +115,7 @@ const DateRangePicker = ({ isDarkMode = false, color = "#fff", backgroundColor =
   ];
 
   // Add the following state to manage the visibility of the calendar
-  const [isCalendarVisible, setIsCalendarVisible] = useState(false);
+
 
   return (
     <div className="date-range-picker-container" style={{ display: 'flex', flexDirection: 'column', alignItems: 'end', width: '50%' }}>
@@ -124,14 +130,14 @@ const DateRangePicker = ({ isDarkMode = false, color = "#fff", backgroundColor =
           borderRadius: '16px',
           border: '1px solid #ccc',
           borderRadius: '25px',
-          padding: '9px 20px',
+          padding: '8px 20px',
           cursor: 'pointer',
           backgroundColor: isDarkMode ? '#1E1E1E' : '#F5F5F5'
         }}
         onClick={() => setIsCalendarVisible(!isCalendarVisible)}
       >
         <CalendarMonthIcon className="calendar-icon" style={{ height: '2.5rem', width: '2.5rem' }} />
-        <span style={{ flexGrow: 1, color, fontSize:'1.2rem', padding: '10px' }}>
+        <span style={{ flexGrow: 1, color, fontSize:'1.2rem', padding: '10px', color:'#666' }}>
           {selectedStartDate && selectedEndDate
             ? `${selectedStartDate.toLocaleDateString()} - ${selectedEndDate.toLocaleDateString()}`
             : 'Select Date Range'}

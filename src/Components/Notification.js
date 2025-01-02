@@ -1,6 +1,6 @@
 import React from 'react'
 
-function Notification({notificationMsg}) {
+function Notification({notificationMsg,notificationMsgBackgroundColor='#28a745'}) {
     return (
         <div
             style={{
@@ -8,7 +8,7 @@ function Notification({notificationMsg}) {
                 top: '20px',
                 left: '50%',
                 transform: 'translateX(-50%)',
-                backgroundColor: '#28a745',
+                backgroundColor: notificationMsgBackgroundColor,
                 color: '#fff',
                 padding: '10px 20px',
                 borderRadius: '5px',

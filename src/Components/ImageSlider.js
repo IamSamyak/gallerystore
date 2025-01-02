@@ -14,7 +14,7 @@ const ImageSlider = () => {
     if (!isPaused) {
       const interval = setInterval(() => {
         setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
-      }, 3000);
+      }, 2500);
       return () => clearInterval(interval);
     }
   }, [images.length, isPaused]);

@@ -13,7 +13,7 @@ import EMPTY_SHOPPING_CART from '../Assets/EMPTY_SHOPPING_CART.png';
 
 const ITEMS_PER_PAGE = 4; // Number of items to display per page
 
-const ShoppingCartPage = ({ cartItems, handleDeleteCartItem, isDarkMode }) => {
+const ShoppingCartPage = ({ cartItems, removeFromCart, isDarkMode }) => {
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
   const [modalOpen, setModalOpen] = useState(false);
@@ -198,7 +198,7 @@ const ShoppingCartPage = ({ cartItems, handleDeleteCartItem, isDarkMode }) => {
                     <td>₹{item.cost}</td>
                     <td>
                       <DeleteIcon
-                        onClick={() => handleDeleteCartItem(item.id)}
+                        onClick={() => removeFromCart(item.id)}
                         className="delete-icon"
                       />
                     </td>
@@ -228,7 +228,7 @@ const ShoppingCartPage = ({ cartItems, handleDeleteCartItem, isDarkMode }) => {
               className="modal-nav-arrow-right"
             />
             <DeleteIcon
-              onClick={() => handleDeleteCartItem(cartItems[currentImageIndex].id)}
+              onClick={() => removeFromCart(cartItems[currentImageIndex].id)}
               className="delete-icon-modal"
             />
             <CloseIcon onClick={closeModal} className="close-icon-modal" />

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './Gallery.css';
-// import ArrowBackIcon from '../Assets/backwardicon.png'
 import config from '../config/config';
 import { useParams } from 'react-router-dom';
 import Notification from '../Components/Notification';
@@ -10,17 +9,17 @@ import GalleryTopMenuBar from '../Components/GalleryTopMenuBar';
 import GalleryModalMenuOptions from '../Components/GalleryModalMenuOptions';
 import WaterMark from '../Components/WaterMark';
 
-function Gallery({ addToCart, isAdminLoggedIn, isDarkMode }) {
+function Gallery({ cartItems, addToCart, isAdminLoggedIn, isDarkMode, removeFromCart }) {
     const { galleryGroupId } = useParams();
     const [galleryAssets, setGalleryAssets] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [modal, setModal] = useState(false);
-    const [modalIndex, setModalIndex] = useState(0);
+    const [selectedAsset, setSelectedAsset] = useState(null);
     const [showNotification, setShowNotification] = useState(false);
-    const [price, setPrice] = useState(0); // Initial dummy price
-    const [isEditing, setIsEditing] = useState(false); // To toggle between editable and non-editable price
-    const [newPrice, setNewPrice] = useState(price);
+    const [notificationMsgAndBGC, setNotificationMsgAndBGC] = useState({});
+    const [isEditing, setIsEditing] = useState(false);
+    const [newPrice, setNewPrice] = useState(0);
     const [isSelected, setIsSelected] = useState(false);
 
     const handlePriceEdit = () => {
@@ -38,7 +37,7 @@ function Gallery({ addToCart, isAdminLoggedIn, isDarkMode }) {
 
             // Make the API request to update the price on the backend, including the JWT token
             await axios.patch(
-                `${config.BASE_URL}/assets/${galleryAssets[modalIndex]?.id}/cost`,
+                `${config.BASE_URL}/assets/${selectedAsset?.id}/cost`,
                 { cost: newPrice },
                 {
                     headers: {
@@ -48,8 +47,14 @@ function Gallery({ addToCart, isAdminLoggedIn, isDarkMode }) {
                 }
             );
 
-            // Update the price in the state and disable editing mode
-            setPrice(newPrice);
+            // Update the price in the selected asset and disable editing mode
+            setGalleryAssets(prevAssets =>
+                prevAssets.map(asset =>
+                    asset.id === selectedAsset.id ? { ...asset, cost: newPrice } : asset
+                )
+            );
+
+            setSelectedAsset(prevAsset => ({ ...prevAsset, cost: newPrice }));
             setIsEditing(false);
         } catch (error) {
             console.error('Error updating price:', error);
@@ -69,18 +74,21 @@ function Gallery({ addToCart, isAdminLoggedIn, isDarkMode }) {
             });
     }, [galleryGroupId]);
 
-    const openModal = (index) => {
-        setModalIndex(index);
-        setPrice(galleryAssets[index].cost);
+    const openModal = (asset) => {
+        setSelectedAsset(asset);    
         setModal(true);
     };
 
     const nextImage = () => {
-        setModalIndex((prevIndex) => (prevIndex + 1) % galleryAssets.length);
+        const currentIndex = galleryAssets.findIndex(asset => asset.id === selectedAsset.id);
+        const nextIndex = (currentIndex + 1) % galleryAssets.length;
+        setSelectedAsset(galleryAssets[nextIndex]);
     };
 
     const prevImage = () => {
-        setModalIndex((prevIndex) => (prevIndex - 1 + galleryAssets.length) % galleryAssets.length);
+        const currentIndex = galleryAssets.findIndex(asset => asset.id === selectedAsset.id);
+        const prevIndex = (currentIndex - 1 + galleryAssets.length) % galleryAssets.length;
+        setSelectedAsset(galleryAssets[prevIndex]);
     };
 
     const deleteAsset = async (assetId) => {
@@ -145,25 +153,28 @@ function Gallery({ addToCart, isAdminLoggedIn, isDarkMode }) {
                 addToCart={addToCart}
                 setShowNotification={setShowNotification}
                 isDarkMode={isDarkMode}
+                setNotificationMsgAndBGC={setNotificationMsgAndBGC}
             />
 
             {showNotification && (
-                <Notification notificationMsg={"Added to cart successfully!!!"} />
+                <Notification notificationMsg={notificationMsgAndBGC.msg} notificationMsgBackgroundColor={notificationMsgAndBGC.BGC} />
             )}
 
             <div className={modal ? "modal open" : "modal"}>
                 <div style={{ position: 'relative', display: 'inline-block' }}>
-                    <img src={galleryAssets[modalIndex]?.imageUrl} style={{ width: '100%' }} alt="modal" />
+                    <img src={selectedAsset?.imageUrl} style={{ width: '100%' }} alt="modal" />
                     <WaterMark height='80px' fontSize='22px'/>
                 </div>
 
                 <GalleryModalMenuOptions
                     isAdminLoggedIn={isAdminLoggedIn}
-                    price={price}
+                    price={selectedAsset?.cost}
                     newPrice={newPrice}
+                    selectedAsset={selectedAsset}
+                    removeFromCart={removeFromCart}
                     setNewPrice={setNewPrice}
                     galleryAssets={galleryAssets}
-                    modalIndex={modalIndex}
+                    cartItems={cartItems}
                     addToCart={addToCart}
                     deleteAsset={deleteAsset}
                     updatePreviewImage={updatePreviewImage}
@@ -175,6 +186,7 @@ function Gallery({ addToCart, isAdminLoggedIn, isDarkMode }) {
                     savePrice={savePrice}
                     prevImage={prevImage}
                     nextImage={nextImage}
+                    setNotificationMsgAndBGC={setNotificationMsgAndBGC}
                 />
             </div>
 
@@ -185,7 +197,7 @@ function Gallery({ addToCart, isAdminLoggedIn, isDarkMode }) {
                             key={index}
                             index={index}
                             imageUrl={item.imageUrl}
-                            onClick={openModal}
+                            onClick={() => openModal(item)}
                         />
                     );
                 })}

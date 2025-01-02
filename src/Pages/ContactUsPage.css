@@ -203,6 +203,7 @@
   border-top-right-radius: 40px;
   border-bottom-right-radius: 40px;
   border-bottom-left-radius: 40px;
+  cursor: pointer;
 }
 
 .contact_us_6 .form-box {

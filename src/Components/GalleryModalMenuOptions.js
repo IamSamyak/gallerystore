@@ -11,8 +11,11 @@ const GalleryModalMenuOptions = ({
     isAdminLoggedIn,
     price,
     newPrice,
+    removeFromCart,
     galleryAssets,
+    selectedAsset,
     modalIndex,
+    cartItems,
     addToCart,
     deleteAsset,
     updatePreviewImage,
@@ -23,9 +26,12 @@ const GalleryModalMenuOptions = ({
     isEditing,
     savePrice,
     nextImage,
-    prevImage
+    prevImage,
+    setNotificationMsgAndBGC
 }) => {
-
+    const isItemPresentInCart = Array.isArray(cartItems) && selectedAsset
+  ? cartItems.some(item => item?.id === selectedAsset?.id)
+  : false;
     return (
         <div style={{color: '#fff' }}>
             {isAdminLoggedIn ? (
@@ -110,7 +116,7 @@ const GalleryModalMenuOptions = ({
                 <Tooltip title="Delete Asset">
                     <DeleteIcon
                         className="cart-icon"
-                        onClick={() => deleteAsset(galleryAssets[modalIndex]?.id)}
+                        onClick={() => deleteAsset(selectedAsset?.id)}
                         style={{
                             fontSize: '48px',
                             cursor: 'pointer',
@@ -123,14 +129,22 @@ const GalleryModalMenuOptions = ({
                     <ShoppingCartIcon
                         className="cart-icon"
                         onClick={() => {
-                            addToCart(galleryAssets[modalIndex]);
-                            setShowNotification(true);
-                            setTimeout(() => setShowNotification(false), 3000);
+                            if(isItemPresentInCart){   
+                                removeFromCart(selectedAsset.id);   
+                                setNotificationMsgAndBGC({msg:'Asset removed to cart successfully!!!',BGC:'#D15151'});
+                                setShowNotification(true);
+                                setTimeout(() => setShowNotification(false), 3000);
+                            }else{
+                                addToCart(selectedAsset);
+                                setNotificationMsgAndBGC({msg:'Asset added to cart successfully!!!',BGC:'#28a745'});
+                                setShowNotification(true);
+                                setTimeout(() => setShowNotification(false), 3000);
+                            }
                         }}
                         style={{
                             fontSize: '48px',
                             cursor: 'pointer',
-                            color: `#fff`,
+                           color: isItemPresentInCart ? '#22C55E' : '#fff',
                         }}
                     />
                 </Tooltip>
